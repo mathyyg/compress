@@ -11,3 +11,14 @@ Projet PHP de site de réduction d'URL / upload de fichiers
 
 ## Contexte
 Projet de Programmation Web Serveur en 3ème année de Licence Informatique à l'Université de Tours
+
+## Import le projet
+	- on git clone https://github.com/mathyyg/compress.git
+	- cd composer
+	- composer install
+	- on configure env ex "DATABASE_URL="mysql://root:root@127.0.0.1:3306/projet?serverVersion=10.4.24-MariaDB"
+	- symfony console doctrine:database:create (verif d’avoir user si non ( symfony console doctrine:migrations:migrate ))
+	- on peut cree un user avec /register se co avec /login et se déco /logout 
+	- pour accéder à la partie /admin crée un premier compte et lui ajouter le rôle “ROLE_ADMIN” avec les guillemet par la suite vous pourrez le faire avec le panel
+
+
