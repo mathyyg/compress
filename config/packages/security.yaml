@@ -37,6 +37,8 @@ security:
         ROLE_VIP: ROLE_USER
         ROLE_ADMIN: ROLE_VIP
 
+    access_denied_url: /login
+
 when@test:
     security:
         password_hashers:
