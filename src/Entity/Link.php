@@ -5,6 +5,9 @@ namespace App\Entity;
 use App\Repository\LinkRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use App\Entity\Resource;
+
+
 #[ORM\Entity(repositoryClass: LinkRepository::class)]
 class Link
 {
@@ -21,7 +24,7 @@ class Link
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?resource $resourceId = null;
+    private ?Resource $resourceId = null;
 
     public function getId(): ?int
     {
@@ -40,12 +43,12 @@ class Link
         return $this;
     }
 
-    public function getResource(): ?resource
+    public function getResource(): ?Resource
     {
         return $this->resource;
     }
 
-    public function setResource(resource $resource): self
+    public function setResource(Resource $resource): self
     {
         $this->resource = $resource;
 

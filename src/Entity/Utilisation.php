@@ -6,6 +6,8 @@ use App\Repository\UtilisationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use App\Entity\Resource;
+
 #[ORM\Entity(repositoryClass: UtilisationRepository::class)]
 class Utilisation
 {
@@ -22,7 +24,7 @@ class Utilisation
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?resource $resourceId = null;
+    private ?Resource $resourceId = null;
 
     public function getId(): ?int
     {
@@ -53,12 +55,12 @@ class Utilisation
         return $this;
     }
 
-    public function getResource(): ?resource
+    public function getResource(): ?Resource
     {
         return $this->resource;
     }
 
-    public function setResource(?resource $resource): self
+    public function setResource(?Resource $resource): self
     {
         $this->resource = $resource;
 

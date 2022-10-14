@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\FileRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use App\Entity\Resource;
+
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 class File
 {
@@ -24,7 +26,7 @@ class File
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?resource $resourceId = null;
+    private ?Resource $resourceId = null;
 
     public function getId(): ?int
     {
@@ -67,7 +69,7 @@ class File
         return $this;
     }
 
-    public function getResource(): ?resource
+    public function getResource(): ?Resource
     {
         return $this->resource;
     }
