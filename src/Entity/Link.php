@@ -16,9 +16,6 @@ class Link
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $linkId = null;
-
     #[ORM\Column(length: 255)]
     private ?string $inputLink = null;
 
