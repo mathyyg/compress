@@ -17,9 +17,9 @@ Projet de Programmation Web Serveur en 3ème année de Licence Informatique à l
 	- cd compress
 	- composer install
 	- on configure env ex "DATABASE_URL="mysql://root:root@127.0.0.1:3306/projet?serverVersion=10.4.24-MariaDB"
-	- symfony console doctrine:database:create (verif d’avoir user si non ( symfony console doctrine:migrations:migrate ))
+	- si la bdd n'existe pas sur votre serveur local : symfony console doctrine:database:create (verif d’avoir user si non ( symfony console doctrine:migrations:migrate ))
+	- build le js/css : npm run watch (on peut fermer le terminal après le build)
+	- lancer le projet : symfony serve
 	- on peut cree un user avec /register se co avec /login et se déco /logout 
 	- aller sur php.ini et enlever le ; de la ligne ;extension=intl
 	- pour accéder à la partie /admin crée un premier compte et lui ajouter le rôle “ROLE_ADMIN” avec les guillemet par la suite vous pourrez le faire avec le panel
-
-
