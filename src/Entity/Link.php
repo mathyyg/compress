@@ -13,15 +13,12 @@ class Link
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $linkId = null;
-
     #[ORM\Column(length: 255)]
     private ?string $inputLink = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?resource $resourceId = null;
+    private ?resource $resource = null;
 
     public function getId(): ?int
     {

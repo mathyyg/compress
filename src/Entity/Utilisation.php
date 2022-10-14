@@ -22,7 +22,7 @@ class Utilisation
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?resource $resourceId = null;
+    private ?resource $resource = null;
 
     public function getId(): ?int
     {
