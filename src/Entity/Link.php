@@ -21,7 +21,7 @@ class Link
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Resource $resourceId = null;
+    private ?Resource $resource = null;
 
     public function getId(): ?int
     {
