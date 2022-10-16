@@ -24,7 +24,7 @@ class Utilisation
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Resource $resourceId = null;
+    private ?Resource $resource = null;
 
     public function getId(): ?int
     {

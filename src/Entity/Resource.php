@@ -23,7 +23,7 @@ class Resource
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateCreated = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?string $dateModified = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -31,6 +31,16 @@ class Resource
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?user $user = null;
+
+    public function __construct()
+    {
+        $this->dateCreated = new \DateTime('now');
+    }
+    
+    public function __toString()
+    {   
+        return (string) "Id: ".$this->id." Url: ".$this->url;
+    }
 
     public function getId(): ?int
     {
@@ -73,12 +83,12 @@ class Resource
         return $this;
     }
 
-    public function getDateModified(): ?string
+    public function getDateModified(): ?\DateTimeInterface
     {
         return $this->dateModified;
     }
 
-    public function setDateModified(?string $dateModified): self
+    public function setDateModified(\DateTimeInterface $dateModified): self
     {
         $this->dateModified = $dateModified;
 

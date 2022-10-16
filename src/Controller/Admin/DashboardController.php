@@ -3,6 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Entity\Resource;
+use App\Entity\Utilisation;
+use App\Entity\File;
+use App\Entity\Link;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -10,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+
 
 class DashboardController extends AbstractDashboardController
 {
@@ -45,9 +50,12 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Users', 'fa fa-user', User::class);
-        //yield MenuItem::linkToLogout('Logout', 'fa fa-exit');
+        yield MenuItem::linkToCrud('Resource', 'fa fa-cubes', Resource::class);
+        yield MenuItem::linkToCrud('Utilisation', 'fa fa-arrow-up', Utilisation::class);
+        yield MenuItem::linkToCrud('Link', 'fa fa-link', Link::class);
+        yield MenuItem::linkToCrud('File', 'fa fa-file', File::class);
+        yield MenuItem::linkToLogout('Logout', 'fa fa-sign-out');
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }
