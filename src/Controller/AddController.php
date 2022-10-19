@@ -13,70 +13,82 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\UserInterface;
 
-#[Route('/lien')]
+
 class AddController extends AbstractController
 {
     #[Route('/add', name: 'app_add')]
-    public function index(Request $request,MotsAleatoire $motsaleatoire ,ResourceRepository $resourcerepository , LinkRepository $linkrepository , UserInterface $user): Response
+    public function index(Request $request,MotsAleatoire $motsaleatoire ,ResourceRepository $resourcerepository , LinkRepository $linkrepository ): Response
     {
+        $user = $this->getUser();
         $info= $request->query->all();
-        $mots= $motsaleatoire->getmots();
+        $mots= $motsaleatoire->getmots(6,$resourcerepository->findAll());
         if(array_key_exists('type', $info)){
+
+            $resource= new Resource();
+            $resource->setUrl($mots);
+            if( array_key_exists('pass', $info) && $info['pass'] != '' ){
+                $resource->setResourcePassword(password_hash($info['pass'], PASSWORD_DEFAULT));
+            }
+            if ($user) {
+                $resource->setUser($user);
+            }
+
             if($info['type'] == "link"){
-                $resoucre= new Resource();
-                $resoucre->setUrl($mots);
-                $resoucre->settype("link");
-                if($info['pass'] != ''){
-                    $resoucre->setResourcePassword($info['pass']);
-                }
-                if ($user) {
-                    $resoucre->setUser($user);
-                }
-                $resourcerepository->save($resoucre,true);
+
+                $resource->settype("link");
+                $resourcerepository->save($resource,true);
                 $link= new Link();
                 $link->setInputLink($info['lien']);
-                $link->setResource($resoucre);
+                $link->setResource($resource);
                 $linkrepository->save($link,true);
+                
+                return $this->render('add/success.html.twig', [
+                    'ressource' => $resource
+                ]);
 
             }else{
 
             }
         }
 
+        
         return $this->render('add/index.html.twig', [
         ]);
     }
 
-    #[Route('/{url}', name: 'app_view')]
-    public function view(Resource $resoucre, LinkRepository $linkrepository,Request $request,UtilisationRepository $utilisationrepository): Response
+    #[Route('/l/{url}', name: 'app_view')]
+    public function view(Resource $resource, LinkRepository $linkrepository,Request $request,UtilisationRepository $utilisationrepository): Response
     {
+
         $ip= $request->server->get('REMOTE_ADDR');
         $util= new Utilisation();
         $util->setIp($ip);
-        $util->setResource($resoucre);
+        $util->setResource($resource);
         
 
         $info= $request->query->all();
-        if($resoucre->getType() == "link"){
-            if($resoucre->getResourcePassword() == null){
+        if($resource->getType() == "link"){
+            if($resource->getResourcePassword() == null){
 
                 $utilisationrepository->save($util,true);
-                $lien = $linkrepository->findOneByid($resoucre->getId());
+                $lien = $linkrepository->findOneByid($resource->getId());
                 return $this->redirect($lien->getInputLink());
 
-            }elseif(array_key_exists('pass', $info) && $info['pass']== $resoucre->getResourcePassword()  ){
+            }elseif(array_key_exists('pass', $info) && password_verify($info['pass'],$resource->getResourcePassword())  ){
                 
                 $utilisationrepository->save($util,true);
-                $lien = $linkrepository->findOneByid($resoucre->getId());
+                $lien = $linkrepository->findOneByid($resource->getId());
                 return $this->redirect($lien->getInputLink());
 
             }else{
                 return $this->render('add/pass.html.twig', [
-                    'ressource' => $resoucre
+                    'ressource' => $resource
                 ]);
             }
+        }else{
+
+
         }
 
         return $this->render('add/index.html.twig', [
