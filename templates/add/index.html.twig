@@ -8,7 +8,7 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 <div class="form">
-    <form action="{{ path('app_add') }}" method="POST">
+    <form action="{{ path('app_add') }}" method="POST" enctype="multipart/form-data">
     <div>
       <input type="radio" id="link" name="type" value="link" hecked>
       <label for="link">lien</label>
@@ -22,21 +22,20 @@
     <div>
         <label for="lien">Lien</label>
         <input type="text" id="lien" name="ressource[]" placeholder="https://www.google.fr" >
-        <form>
     </div>
     <div>
-        <label for="file">Lien</label>
-        <input type="file" id="file" name="ressource[]" accept="image/*,.pdf">
+        <label for="files">fichier: </label>
+        <input type="file" id="files" name="ressource[]" accept="image/*,.pdf">
     </div>
     {% if is_granted('ROLE_VIP') %}
     <div>
         <label for="pass">Mots de passe</label>
         <input type="text" id="pass" name="pass" placeholder="ne pas remplir si pas de mots de passes" >
-        <form>
     </div>
     {% endif %}
     <div>
         <input type="submit" value="crée" >
     </div>
+    </form>
 </div>
 {% endblock %}

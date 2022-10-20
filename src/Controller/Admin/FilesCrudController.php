@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\File;
+use App\Entity\Fichier;
 use App\Entity\Resource;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -21,8 +21,7 @@ class FileCrudController extends AbstractCrudController
         return [
             IdField::new('id'),
             TextField::new('name'),
-            TextField::new('extension'),
-            TextField::new('location'),
+            TextField::new('size'),
             AssociationField::new('resource')->setCrudController(ResourceCrudController::class),
 
         ];

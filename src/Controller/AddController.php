@@ -5,20 +5,24 @@ namespace App\Controller;
 use App\Service\MotsAleatoire;
 use App\Entity\Resource;
 use App\Entity\Link;
+use App\Entity\Fichier;
 use App\Entity\Utilisation;
 use App\Repository\UtilisationRepository;
 use App\Repository\ResourceRepository;
 use App\Repository\LinkRepository;
+use App\Repository\FichierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Vich\UploaderBundle\FileAbstraction\ReplacingFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 class AddController extends AbstractController
 {
     #[Route('/add', name: 'app_add')]
-    public function index(Request $request,MotsAleatoire $motsaleatoire ,ResourceRepository $resourcerepository , LinkRepository $linkrepository ): Response
+    public function index(Request $request,MotsAleatoire $motsaleatoire ,ResourceRepository $resourcerepository , LinkRepository $linkrepository , FichierRepository $filesrepository): Response
     {
         $user = $this->getUser();
         $info= $request->request->all();
@@ -47,7 +51,19 @@ class AddController extends AbstractController
                     ]);
                     
             }else{
-                    
+                    $resource->settype("file");
+                    $resourcerepository->save($resource,true);
+                    $file = new Fichier();
+                    $file->setResource($resource);
+
+                    $fichier = $request->files->get('ressource');
+
+                    $file->setFile($fichier[0]);
+
+                    $filesrepository->save($file,true);
+                    return $this->render('add/success.html.twig', [
+                        'ressource' => $resource
+                    ]);
             }
             }
         
@@ -58,7 +74,7 @@ class AddController extends AbstractController
     }
 
     #[Route('/l/{url}', name: 'app_view')]
-    public function view(Resource $resource, LinkRepository $linkrepository,Request $request,UtilisationRepository $utilisationrepository): Response
+    public function view(Resource $resource, LinkRepository $linkrepository,Request $request,UtilisationRepository $utilisationrepository , FichierRepository $filesrepository): Response
     {
 
         $ip= $request->server->get('REMOTE_ADDR');
@@ -87,7 +103,27 @@ class AddController extends AbstractController
                 ]);
             }
         }else{
+            if($resource->getResourcePassword() == null){
 
+                $utilisationrepository->save($util,true);
+                $fichier = $filesrepository->findOneByid($resource->getId());
+                return $this->render('add/dl.html.twig', [
+                    'fichier' => $fichier
+                ]);
+
+            }elseif(array_key_exists('pass', $info) && password_verify($info['pass'],$resource->getResourcePassword())  ){
+                
+                $utilisationrepository->save($util,true);
+                $fichier = $filesrepository->findOneByid($resource->getId());
+                return $this->render('add/dl.html.twig', [
+                    'fichier' => $fichier
+                ]);
+
+            }else{
+                return $this->render('add/pass.html.twig', [
+                    'ressource' => $resource
+                ]);
+            }
 
         }
 
