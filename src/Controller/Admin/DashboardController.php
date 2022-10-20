@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Entity\Resource;
 use App\Entity\Utilisation;
-use App\Entity\Files;
+use App\Entity\Fichier;
 use App\Entity\Link;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
