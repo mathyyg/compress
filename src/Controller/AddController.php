@@ -107,7 +107,7 @@ class AddController extends AbstractController
 
                 $utilisationrepository->save($util,true);
                 $fichier = $filesrepository->findOneByid($resource->getId());
-                return $this->render('add/dl.html.twig', [
+                return $this->render('add/affiche.html.twig', [
                     'fichier' => $fichier
                 ]);
 
@@ -115,7 +115,7 @@ class AddController extends AbstractController
                 
                 $utilisationrepository->save($util,true);
                 $fichier = $filesrepository->findOneByid($resource->getId());
-                return $this->render('add/dl.html.twig', [
+                return $this->render('add/affiche.html.twig', [
                     'fichier' => $fichier
                 ]);
 
