@@ -21,40 +21,40 @@ class AddController extends AbstractController
     public function index(Request $request,MotsAleatoire $motsaleatoire ,ResourceRepository $resourcerepository , LinkRepository $linkrepository ): Response
     {
         $user = $this->getUser();
-        $info= $request->query->all();
+        $info= $request->request->all();
         $mots= $motsaleatoire->getmots(6,$resourcerepository->findAll());
-        if(array_key_exists('type', $info)){
 
-            $resource= new Resource();
-            $resource->setUrl($mots);
-            if( array_key_exists('pass', $info) && $info['pass'] != '' ){
-                $resource->setResourcePassword(password_hash($info['pass'], PASSWORD_DEFAULT));
-            }
-            if ($user) {
-                $resource->setUser($user);
-            }
-
-            if($info['type'] == "link"){
-
-                $resource->settype("link");
-                $resourcerepository->save($resource,true);
-                $link= new Link();
-                $link->setInputLink($info['lien']);
-                $link->setResource($resource);
-                $linkrepository->save($link,true);
-                
-                return $this->render('add/success.html.twig', [
-                    'ressource' => $resource
-                ]);
-
-            }else{
-
-            }
+        $resource= new Resource();
+        $resource->setUrl($mots);
+        if( array_key_exists('pass', $info) && $info['pass'] != '' ){
+            $resource->setResourcePassword(password_hash($info['pass'], PASSWORD_DEFAULT));
+        }
+        if ($user) {
+            $resource->setUser($user);
         }
 
+        if(array_key_exists('type', $info)){
+            if($info['type'] == "link"){
+                    $resource->settype("link");
+                    $resourcerepository->save($resource,true);
+                    $link= new Link();
+                    // dd($info['ressource']);
+                    $link->setInputLink($info['ressource'][0]);
+                    $link->setResource($resource);
+                    $linkrepository->save($link,true);
+                    return $this->render('add/success.html.twig', [
+                        'ressource' => $resource
+                    ]);
+                    
+            }else{
+                    
+            }
+            }
         
-        return $this->render('add/index.html.twig', [
-        ]);
+
+            return $this->render('add/index.html.twig', [
+            ]);
+
     }
 
     #[Route('/l/{url}', name: 'app_view')]
@@ -67,7 +67,7 @@ class AddController extends AbstractController
         $util->setResource($resource);
         
 
-        $info= $request->query->all();
+        $info= $request->request->all();
         if($resource->getType() == "link"){
             if($resource->getResourcePassword() == null){
 
@@ -91,7 +91,5 @@ class AddController extends AbstractController
 
         }
 
-        return $this->render('add/index.html.twig', [
-        ]);
     }
 }

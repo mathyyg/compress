@@ -9,8 +9,8 @@
 </style>
 
 <div class="form">
-    {% if ressource %}
-    <form action="{{ path('app_view', { 'url': ressource.url }) }}" method="GET">
+    
+    <form action="{{ path('app_view', { 'url': ressource.url }) }}" method="POST">
         <div>
             <label for="pass">Mots de passe</label>
             <input type="text" id="pass" name="pass" placeholder="mots de passe" required>
@@ -21,6 +21,6 @@
             <input type="submit" value="allez" >
         </div>
     </form>
-    {% endif %}
+    
 </div>
 {% endblock %}
