@@ -44,7 +44,7 @@ class Fichier
     }
     public function setFile(?File $imageFile = null): void
     {
-        $this->file = new ReplacingFile($imageFile);
+        $this->file = $imageFile;
 
         if (null !== $imageFile) {
             // It is required that at least one field changes if you are using doctrine
