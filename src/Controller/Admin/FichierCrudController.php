@@ -2,18 +2,19 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\File;
+use App\Entity\Fichier;
 use App\Entity\Resource;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
-class FileCrudController extends AbstractCrudController
+class FichierCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return File::class;
+        return Fichier::class;
     }
 
     public function configureFields(string $pageName): iterable
@@ -22,7 +23,7 @@ class FileCrudController extends AbstractCrudController
             IdField::new('id'),
             TextField::new('name'),
             TextField::new('extension'),
-            TextField::new('location'),
+            IntegerField::new('size'),
             AssociationField::new('resource')->setCrudController(ResourceCrudController::class),
 
         ];

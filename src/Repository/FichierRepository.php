@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\File;
+use App\Entity\Fichier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+
 
 /**
  * @extends ServiceEntityRepository<File>
@@ -14,14 +15,14 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method File[]    findAll()
  * @method File[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class FileRepository extends ServiceEntityRepository
+class FichierRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, File::class);
+        parent::__construct($registry, Fichier::class);
     }
 
-    public function save(File $entity, bool $flush = false): void
+    public function save(Fichier $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +31,7 @@ class FileRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(File $entity, bool $flush = false): void
+    public function remove(Fichier $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -38,7 +39,15 @@ class FileRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+    public function findOneByid($id): ?Fichier
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.resource = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 //    /**
 //     * @return File[] Returns an array of File objects
 //     */
@@ -54,13 +63,5 @@ class FileRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?File
-//    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
 }
