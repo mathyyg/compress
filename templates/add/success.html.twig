@@ -11,7 +11,7 @@
 <div class="form">
     {% if ressource %}
     <p> Lien reussi </p>
-    <h1>Lien : http://127.0.0.1:8000/l/{{ ressource.url }} </h1>
+    <h1>Lien : <a href="http://127.0.0.1:8000/l/{{ ressource.url }}" >http://127.0.0.1:8000/l/{{ ressource.url }}</a> </h1>
     {% endif %}
 </div>
 {% endblock %}
