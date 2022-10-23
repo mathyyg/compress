@@ -18,7 +18,7 @@ class MotsAleatoire
 
         foreach ( $ressources as &$ressource) {
             if( $ressource->getUrl()== $chaineAleatoire ){
-                return getmots();
+                return getmots(6 , $ressources);
             }
         }
 
