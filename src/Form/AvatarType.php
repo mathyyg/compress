@@ -13,7 +13,11 @@ class AvatarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('file', VichImageType::class)
+        ->add('file', VichImageType::class,[
+            'required' => false,
+            'data_class' => null,
+            'empty_data' => ''
+        ])
         ;
     }
 

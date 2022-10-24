@@ -10,19 +10,22 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AvatarController extends AbstractController
+class AvatarController extends AbstractController 
 {
     
     #[Route('/profile/avatar', name: 'app_avatar')]
     public function index(Request $request, AvatarRepository $avatarrepository): Response
     {
-        $avatar = new Avatar();
+        $user = $this->getUser();
+        $avatar = $user->getAvatar();
+        if($avatar == null){
+            $avatar = new Avatar();
+        }
         $form = $this->createForm(AvatarType::class, $avatar);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->getUser();
-            $avatar->setUser($user);
+            $user->setAvatar($avatar);
             $avatarrepository->save($avatar, true);
         }
 

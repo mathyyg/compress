@@ -38,6 +38,16 @@ class AvatarRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    
+    public function findOneByUser($value): ?Avatar
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.user = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
 //    /**
 //     * @return Avatar[] Returns an array of Avatar objects
@@ -54,13 +64,5 @@ class AvatarRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Avatar
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
 }
