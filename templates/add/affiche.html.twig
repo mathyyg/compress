@@ -11,7 +11,8 @@
 <div>
     {% if fichier %}
     <p> La photo</p>
-    <img src="{{asset ( vich_uploader_asset(fichier, 'file')) }}" alt="{{ fichier.name }}">
+    
+    <td><a download href="{{asset (vich_uploader_asset (fichier, 'file'))}}" target="_blank" </a>CLicquer pour telecharger </td>
     {% endif %}
 </div>
 {% endblock %}
