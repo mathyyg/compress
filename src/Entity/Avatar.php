@@ -9,7 +9,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: AvatarRepository::class)]
 #[Vich\Uploadable]
-class Avatar
+class Avatar implements \Serializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -56,7 +56,7 @@ class Avatar
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -68,7 +68,7 @@ class Avatar
         return $this->size;
     }
 
-    public function setSize(int $size): self
+    public function setSize(?int $size): self
     {
         $this->size = $size;
 
@@ -86,4 +86,22 @@ class Avatar
 
         return $this;
     }
+      /** @see \Serializable::serialize() */
+      public function serialize()
+      {
+          return serialize(array(
+              $this->id,
+              $this->name,
+  
+          ));
+      }
+  
+      /** @see \Serializable::unserialize() */
+      public function unserialize($serialized)
+      {
+          list (
+              $this->id,
+  
+          ) = unserialize($serialized);
+      }
 }
