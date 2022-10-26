@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Success  page!{% endblock %}
+{% block title %}Hello ProfileControlerController!{% endblock %}
 
 {% block body %}
 <style>
@@ -8,11 +8,11 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div>
-    {% if fichier %}
-    <p> La photo</p>
-    
-    <td><a download href="{{asset (vich_uploader_asset (fichier, 'file'))}}" target="_blank"> Clic pour telecharger </a> </td>
+    {% if is_granted('ROLE_VIP') %}
+    <h1>Edite url</h1>
+        {{ include('profile/_form.html.twig') }}
+    {% else %}
+    <h1>Tu doit acheter le VIP</h1>
+
     {% endif %}
-</div>
 {% endblock %}

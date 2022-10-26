@@ -26,7 +26,7 @@ class AddController extends AbstractController
     {
         $user = $this->getUser();
         $info= $request->request->all();
-        $mots= $motsaleatoire->getmots(6,$resourcerepository->findAll());
+        $mots= $motsaleatoire->getmots($resourcerepository);
 
         $resource= new Resource();
         $resource->setUrl($mots);
