@@ -1,0 +1,186 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compress - Accueil{% endblock %}
+
+{% block body %}
+
+<div class="ui large top fixed menu transition hidden">
+    <div class="ui container">
+        <a class="item {% if 'accueil' in app.request.uri %}active{% endif %}">Accueil</a>
+        <a class="item {% if 'fonctionnalites' in app.request.uri %}active{% endif %}">Fonctionnalités</a>
+        <a class="item  {% if 'about' in app.request.uri %}active{% endif %}">À propos</a>
+        <div class="right secondary pointing menu">
+        {% if app.user %}
+            <a href="{{path('app_logout')}}" class="ui item">
+                Déconnexion
+            </a>
+        {% else %}
+            <a href="{{path('app_login')}}" class="ui item">
+                Connexion
+            </a>
+        {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="ui inverted center aligned segment premier" id="premier" style="border-radius:0;padding-bottom:10em;margin-top:0;">
+    <div class="ui container">
+        <div class="ui inverted secondary pointing menu">
+            <a class="item {% if 'accueil' in app.request.uri %}active{% endif %}">Accueil</a>
+            <a class="item {% if 'fonctionnalites' in app.request.uri %}active{% endif %}">Fonctionnalités</a>
+            <a class="item  {% if 'about' in app.request.uri %}active{% endif %}">À propos</a>
+            <div class="right secondary pointing menu">
+            {% if app.user %}
+                <a href="{{path('app_logout')}}" class="ui item">
+                    Déconnexion
+                </a>
+            {% else %}
+                <a href="{{path('app_login')}}" class="ui item">
+                    Connexion
+                </a>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="ui text container">
+    <h1 class="ui inverted header" style="padding-top:2em; font-size:4em;">
+        Compress
+    </h1>
+    <h2 class="ui inverted header">Obtenez un lien plus court pour vos ressources et fichiers</h2>
+    {# <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div> #}
+    <form>
+        <div class="ui fluid centered input">
+            <input type="text" placeholder="Entrez un lien à raccourcir ...">
+        </div>
+    </form>
+    </div>
+</div>
+<div class="ui center aligned segment" style="border:none;border-radius:0;box-shadow:none;padding-top:4em;">
+    <div class="ui stackable container">
+        <h1 class="header">Découvrez les fonctionnalités</h1>
+        <div class="ui three cards">
+            <div class="ui card">
+                <div class="content">
+                    <div class="header">
+                        Anonyme
+                    </div>
+                    <div class="description">
+                        <div class="ui bulleted list">
+                            <div class="item">taetjgoa</div>
+                            <div class="item">taetjgoa</div>
+                            <div class="item">taetjgoa</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui button">
+                    <i class="check icon"></i>
+                    Choisir
+                </div>
+            </div>
+            <div class="ui blue card">
+                <div class="content">
+                    <div class="header" style="color:blue;">
+                        Membre
+                    </div>
+                    <div class="description">
+                        - yyyyyyyyyy-
+                        - ypeyqkyys
+                        - yksehb
+
+                    </div>
+                </div>
+                <div class="ui blue button">
+                    <i class="check icon"></i>
+                    Choisir
+                </div>
+            </div>
+            <div class="ui orange card">
+                <div class="content">
+                    <div class="header" style>
+                        VIP
+                    </div>
+                    <div class="description">
+                        - yyyyyyyyyy-
+                        - ypeyqkyys
+                        - yksehb
+
+                    </div>
+                </div>
+                <div class="ui orange button">
+                    <i class="check icon"></i>
+                    Choisir
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <a class="ui huge button">Créer votre compte</a>
+    </div>
+</div>
+<div class="ui center aligned segment deuxieme" style="border-radius:0;box-shadow:none;padding-top:4em;">
+    <div class="ui stackable container">
+        <h1 class="header">Comparez les fonctionnalités</h1>
+        <table class="ui celled table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No Name Specified</td>
+                    <td>Unknown</td>
+                    <td class="negative">None</td>
+                </tr>
+                <tr class="positive">
+                    <td>Jimmy</td>
+                    <td><i class="icon checkmark"></i> Approved</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td>Jamie</td>
+                    <td>Unknown</td>
+                    <td class="positive"><i class="icon close"></i> Requires call</td>
+                </tr>
+                    <tr class="negative">
+                    <td>Jill</td>
+                    <td>Unknown</td>
+                    <td>None</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div><br><br><br><br><br>
+{# <style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/compress/src/Controller/AccueilController.php'|file_link(0) }}">src/Controller/AccueilController.php</a></code></li>
+        <li>Your template at <code><a href="{{ 'C:/wamp64/www/compress/templates/accueil/index.html.twig'|file_link(0) }}">templates/accueil/index.html.twig</a></code></li>
+    </ul>
+</div> #}
+{% endblock %}
+{% block script %}
+<script>
+$(function() {
+    $('.deuxieme').visibility({
+        once: false,
+        onTopPassed: function() {
+            $('.fixed.menu').transition('fade in');
+            console.log("passé");
+        },
+        onTopPassedReverse: function() {
+            $('.fixed.menu').transition('fade out');
+            console.log("passé reverse");
+        }
+    });
+});
+</script>
+{% endblock %}
