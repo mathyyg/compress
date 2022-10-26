@@ -2,23 +2,24 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Link;
-use App\Entity\Resource;
+use App\Entity\Avatar;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
-
-
-class LinkCrudController extends AbstractCrudController
+class AvatarCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Link::class;
+        return Avatar::class;
     }
 
     
@@ -26,8 +27,13 @@ class LinkCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('inputLink'),
-            AssociationField::new('resource')->setCrudController(ResourceCrudController::class)->hideWhenUpdating(),
+            ImageField::new('name', 'Image')
+            ->hideOnForm()
+            ->setBasePath('/avatar')
+            ->setUploadDir('public/avatar'),
+            Field::new('file')->setFormType(VichImageType::class)->hideOnIndex(),
+            AssociationField::new('user')->setCrudController(UserCrudController::class)->hideWhenUpdating(),
+            IntegerField::new('size')->hideOnForm(),
         ];
     }
     public function configureActions(Actions $actions): Actions
