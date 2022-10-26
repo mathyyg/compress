@@ -46,8 +46,8 @@ class Avatar implements \Serializable
     {
         $this->file = $file;
 
-        if (null !== $file) {
-            $this->updatedAt = new \DateTimeImmutable();
+        if ($file != null) {
+            $this->updatedAt = new \DateTime('now');
         }
     }
 
