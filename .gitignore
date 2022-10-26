@@ -8,8 +8,7 @@
 /var/
 /vendor/
 /migrations/
-/public/avatar/
-/public/fichier/
+
 
 ###< symfony/framework-bundle ###
 
