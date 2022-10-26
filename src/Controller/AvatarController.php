@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Avatar;
+use App\Entity\User;
 use App\Form\AvatarType;
 use App\Repository\AvatarRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,6 +28,7 @@ class AvatarController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setAvatar($avatar);
             $avatarrepository->save($avatar, true);
+            return $this->redirectToRoute('app_profile');
         }
 
         return $this->render('avatar/index.html.twig', [

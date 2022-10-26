@@ -34,9 +34,9 @@ class Fichier
     #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(inversedBy: 'fichier', cascade: ['persist', 'remove'])]
     private ?Resource $resource = null;
+
 
     public function getId(): ?int
     {
@@ -112,12 +112,13 @@ class Fichier
         return $this->resource;
     }
 
-    public function setResource(resource $resource): self
+    public function setResource(?Resource $resource): self
     {
         $this->resource = $resource;
 
         return $this;
     }
+
 
     
 }
