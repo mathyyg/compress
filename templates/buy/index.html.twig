@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Buy garde{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+    {% if is_granted('ROLE_VIP') %}
+    <div >
+        <h1>Merci de ton achat</h1>
+        <p>Tu as deja le Grade VIP </p>
+    </div>
+    {% else %}
+    <h1>Achete ton grade VIP pour 30euro</h1>
+    <p>Tu pourras personaliser t'es liens et les securiser avec un mots de passe </p>
+      {% if is_granted('ROLE_USER') %}
+      <i>fictif</i>
+        <form action="{{ path('app_buy') }}" method="POST">
+        <legend>Informations CB</legend>
+        <ol>
+          <li>
+            <fieldset>
+              <legend>Type de carte bancaire</legend>
+              <ol>
+                <li>
+                  <input id="visa" name="type_de_carte" type=radio>
+                  <label for="visa">VISA</label>
+                </li>
+                <li>
+                  <input id="mastercard" name="type_de_carte" type=radio>
+                  <label for="mastercard">Mastercard</label>
+                </li>
+              </ol>
+            </fieldset>
+          </li>
+          <li>
+            <label for="numero_de_carte">Numéro de carte</label>
+            <input id="numero_de_carte" name="numero_de_carte" type="number" required>
+          </li>
+          <li>
+            <label for="securite">Code sécurité</label>
+            <input id="securit"e name="securite" type="number" required>
+          </li>
+          <li>
+            <label for="nom_porteur">Nom du porteur</label>
+            <input id="nom_porteur" name="nom_porteur" type="text" placeholder="Même nom que sur la carte" required>
+          </li>
+        </ol>
+      </fieldset>
+    <button type="submit">J'achète !</button>
+    </form>
+  {% else %}
+    <form action="{{ path('app_login') }}" method="POST">
+       <label for="connecter">tu doit etre connecter pour acheter</label>
+       <input id="connecter" type="submit" value="se connecter">
+    </form>
+  {% endif %}
+{% endif %}
+{% endblock %}
