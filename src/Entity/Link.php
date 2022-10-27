@@ -19,9 +19,9 @@ class Link
     #[ORM\Column(length: 255)]
     private ?string $inputLink = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(inversedBy: 'link', cascade: ['persist', 'remove'])]
     private ?Resource $resource = null;
+
 
     public function getId(): ?int
     {
@@ -45,10 +45,11 @@ class Link
         return $this->resource;
     }
 
-    public function setResource(Resource $resource): self
+    public function setResource(?Resource $resource): self
     {
         $this->resource = $resource;
 
         return $this;
     }
+
 }
