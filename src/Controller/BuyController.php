@@ -19,6 +19,7 @@ class BuyController extends AbstractController
             $user = $this->getUser();
             $user->addRole("ROLE_VIP");
             $userrepository->save($user,true);
+            return $this->redirectToRoute('app_profile');
         }
 
         return $this->render('buy/index.html.twig', [
