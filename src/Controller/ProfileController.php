@@ -32,19 +32,4 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/profile/edit/{url}', name: 'app_edit_resource')]
-    public function modifresource(Resource $resource ,Request $request, ResourceRepository $resourcerepository ): Response
-    {
-        $form = $this->createForm(ResourceFormType::class, $resource);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $resource->setDateModified();
-            $resourcerepository->save($resource, true);
-            return $this->redirectToRoute('app_profile');
-        }
-        return $this->render('profile/edit.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
 }

@@ -17,9 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Vich\UploaderBundle\FileAbstraction\ReplacingFile;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Form\ResourceFormType;
 
 
-class AddController extends AbstractController
+class ResourceController extends AbstractController
 {
     #[Route('/add', name: 'app_add')]
     public function index(Request $request,MotsAleatoire $motsaleatoire ,ResourceRepository $resourcerepository , LinkRepository $linkrepository , FichierRepository $filesrepository): Response
@@ -41,34 +42,29 @@ class AddController extends AbstractController
             if($info['type'] == "link"){
                     $resource->settype("link");
                     $resourcerepository->save($resource,true);
+
                     $link= new Link();
-                    // dd($info['ressource']);
                     $link->setInputLink($info['ressource'][0]);
                     $link->setResource($resource);
                     $linkrepository->save($link,true);
-                    return $this->render('add/success.html.twig', [
-                        'ressource' => $resource
-                    ]);
                     
             }else{
                     $resource->settype("file");
                     $resourcerepository->save($resource,true);
+
                     $file = new Fichier();
                     $file->setResource($resource);
-
                     $fichier = $request->files->get('ressource');
-
                     $file->setFile($fichier[0]);
-
                     $filesrepository->save($file,true);
-                    return $this->render('add/success.html.twig', [
-                        'ressource' => $resource
-                    ]);
             }
+            return $this->render('Resource/success.html.twig', [
+                'ressource' => $resource
+            ]);
             }
         
 
-            return $this->render('add/index.html.twig', [
+            return $this->render('Resource/index.html.twig', [
             ]);
 
     }
@@ -98,7 +94,7 @@ class AddController extends AbstractController
                 return $this->redirect($lien->getInputLink());
 
             }else{
-                return $this->render('add/pass.html.twig', [
+                return $this->render('Resource/pass.html.twig', [
                     'ressource' => $resource
                 ]);
             }
@@ -107,7 +103,7 @@ class AddController extends AbstractController
 
                 $utilisationrepository->save($util,true);
                 $fichier = $filesrepository->findOneByid($resource->getId());
-                return $this->render('add/affiche.html.twig', [
+                return $this->render('Resource/affiche.html.twig', [
                     'fichier' => $fichier
                 ]);
 
@@ -115,17 +111,33 @@ class AddController extends AbstractController
                 
                 $utilisationrepository->save($util,true);
                 $fichier = $filesrepository->findOneByid($resource->getId());
-                return $this->render('add/affiche.html.twig', [
+                return $this->render('Resource/affiche.html.twig', [
                     'fichier' => $fichier
                 ]);
 
             }else{
-                return $this->render('add/pass.html.twig', [
+                return $this->render('Resource/pass.html.twig', [
                     'ressource' => $resource
                 ]);
             }
 
         }
 
+    }
+
+    #[Route('/profile/edit/{url}', name: 'app_edit_resource')]
+    public function modifresource(Resource $resource ,Request $request, ResourceRepository $resourcerepository ): Response
+    {
+        $form = $this->createForm(ResourceFormType::class, $resource);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $resource->setDateModified();
+            $resourcerepository->save($resource, true);
+            return $this->redirectToRoute('app_profile');
+        }
+        return $this->render('Resource/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }
