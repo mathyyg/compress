@@ -13,8 +13,6 @@
         {{ include('profile/_form.html.twig') }}
     {% else %}
     <h1>Tu doit acheter le VIP</h1>
-    <form action="{{ path('app_buy') }}" method="POST">
-       <input type="submit" value="acheter">
-    </form>
+
     {% endif %}
 {% endblock %}

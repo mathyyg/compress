@@ -1,12 +1,11 @@
 <?php
 namespace App\Service;
 
-use App\Repository\ResourceRepository;
 
 class MotsAleatoire 
 {
 
-    function getmots(ResourceRepository $resourcerepository )
+    function getmots()
     {
         $longueur =6;
         $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
