@@ -39,6 +39,22 @@ class ResourceRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByUrl($url) {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.url = :val')
+            ->setParameter('val', $url)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function checkAccess($resource, $user) {
+        if($resource->getUser()->getId() == $user->getId()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     public function findByUserAndFilter($value,$filters): array
     {

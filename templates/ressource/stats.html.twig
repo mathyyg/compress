@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compress - Stats{% endblock %}
+
+{% block body %}
+
+<div class="ui center aligned segment" style="margin:3em;">
+    <div class="ui container">
+        <h1 class="header">Statistiques du lien</h1>
+        {% if utilisations|length > 0 %}
+        <p>Ce lien a été utilisé {{utilisations|length}} fois.</p>
+        <table class="ui celled table">
+            <thead>
+                <tr>
+                    <th>Adresse IP</th>
+                    <th>Date</th>
+                    <th>Type de ressource</th>
+                    <th>URL suivie</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for uti in utilisations %}
+                    <tr>
+                        <td>{% if uti.ip is defined %}{{uti.ip}}{% else %}Masqué{% endif %}</td>
+                        <td>{{uti.date|date('d/m/Y H:i')}}</td>
+                        <td>{{ressource.type}}</td>
+                        <td>Arracher julien</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p><i class="red times icon"></i>Ce lien n'a pas encore été utilisé.</p>
+        {% endif %}
+        <a href="{{path('app_view', {url: ressource.url})}}" class="ui button">Redirection du lien</a>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+$(function() {
+    $('.ui.pop').popup();
+});
+</script>
+{% endblock %}
