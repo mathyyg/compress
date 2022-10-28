@@ -7,94 +7,105 @@
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
+<div class="ui grid" style="margin:3em;" >
+  <div class="two column row">
+    <div class="ui center aligned container segment column" >
+        <h1 class="ui header">Profile</h1>
+        <div class="ui form container center aligned">
+        {{ include('profile/_form.html.twig') }}
+        </div>
+    </div>
 
-<div class="">
-    <h1>Profile</h1>
-    {{ include('profile/_form.html.twig') }}
-</div>
+    <div class="ui center aligned container segment column" >
+        <h1>Avatar</h1>
+            {% if user.Avatar != null and user.Avatar.name != null %}
+                <img class="ui small image circular bordered centered" src="{{asset (vich_uploader_asset (user.avatar, 'file'))}}" target="_blank" >
+            {% else %}
+                <p class="ui red text">Aucune avatar de profile<p>
+            {% endif %}
 
-<div class="">
-    <h1>Avatar</h1>
-        {% if user.Avatar != null and user.Avatar.name != null %}
-            <img class="ui small image" src="{{asset (vich_uploader_asset (user.avatar, 'file'))}}" target="_blank" >
-        {% else %}
-            <p class="ui red">Aucune avatar de profile<p>
-        {% endif %}
+            <form action="{{ path('app_avatar') }}" method="POST">
+                <div >
+                    <input class="ui button" type="submit" value="Modifier avatar">
+                </div>
+            </form>
 
-        <form action="{{ path('app_avatar') }}" method="POST">
-            <div >
-                <input type="submit" value="Modifier avatar">
+    </div>
+  </div>
+
+
+    <div class="one column row">
+        <div  class="ui center aligned container segment column">
+            <h1 class="ui header">Lien</h1>
+            <div  class="ui center aligned container segment">
+                <h2>Filtre</h2>
+                <form class="ui form" action="{{ path('app_profile') }}" method="POST">
+                    <div class="two fields">
+                        <div class="ui field radio checkbox checked">
+                            <input class="ui button" type="radio" id="link" name="type" value="link" checked>
+                            <label for="link">lien</label>
+                        </div>
+                        <div class="ui field radio checkbox">
+                            <input class="ui button" type="radio" id="file" name="type" value="file">
+                            <label for="file">fichier</label>
+                        </div>
+                    </div>
+                    <div class="two fields">
+                        <div class="field">
+                            <label for="url">Url</label>
+                            <input type="text" id="url" name="url" placeholder="h289k" >
+                        </div>
+                        <div class="field">
+                            <input class="ui button" type="submit" value="rechercher">
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
-    
+            <table class="ui celled table ">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Type</th>
+                        <th>url</th>
+                        <th>DateCreated</th>
+                        <th>Password</th>
+                        <th>Ressource</th>
+                        <th>action</th>
 
-</div>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for lien in liens %}
+                    <tr>
+                        <td>{{ lien.id }}</td>
+                        <td>{{ lien.type }}</td>
+                        <td>{{ lien.url }}</td>
+                        <td>{{ lien.dateCreated ? lien.dateCreated |date('Y-m-d') : '' }}</td>
+                        {% if lien.resourcePassword != "" %}
+                            <td><p>true</p></td>
+                        {% else %}
+                            <td><p>false</p></td>
+                        {% endif %}
 
-<div class="">
-    <h1>Lien</h1>
-    <h2>Filtre</h2>
-        <form action="{{ path('app_profile') }}" method="POST">
-            <div>
-                <input type="radio" id="link" name="type" value="link" checked>
-                <label for="link">lien</label>
-            </div>
-
-            </div>
-                <input type="radio" id="file" name="type" value="file">
-                <label for="file">fichier</label>
-            </div>
-
-            <div>
-                <label for="url">Url</label>
-                <input type="text" id="url" name="url" placeholder="h289k" >
-            </div>
-            <div >
-                <input type="submit" value="rechercher">
-            </div>
-        </form>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Type</th>
-                <th>url</th>
-                <th>DateCreated</th>
-                <th>Password</th>
-                <th>Ressource</th>
-                <th>action</th>
-
-            </tr>
-        </thead>
-        <tbody>
-        {% for lien in liens %}
-            <tr>
-                <td>{{ lien.id }}</td>
-                <td>{{ lien.type }}</td>
-                <td>{{ lien.url }}</td>
-                <td>{{ lien.dateCreated ? lien.dateCreated |date('Y-m-d') : '' }}</td>
-                {% if lien.resourcePassword != "" %}
-                    <td><p>true</p></td>
+                        {% if lien.type == "link" %}
+                            <td><a href="{{ lien.link.inputLink }}" >{{ lien.link.inputLink }}</a></td>
+                        {% else %}
+                            <td><img class="ui small image" src="{{asset (vich_uploader_asset (lien.fichier, 'file'))}}" target="_blank" ></td>
+                        {% endif %}
+                        <td>
+                            <a class="ui button" href="{{ path('app_edit_resource', {'url': lien.url }) }}">edit</a>
+                            <a class="ui button" href="{{ path('app_ressource', {'url': lien.url }) }}">stats</a>
+                        </td>
+                    </tr>
                 {% else %}
-                    <td><p>false</p></td>
-                {% endif %}
-
-                {% if lien.type == "link" %}
-                    <td><a href="{{ lien.link.inputLink }}" >{{ lien.link.inputLink }}</a></td>
-                  {% else %}
-                    <td><img class="ui small image" src="{{asset (vich_uploader_asset (lien.fichier, 'file'))}}" target="_blank" ></td>
-                {% endif %}
-                <td>
-                    <a href="{{ path('app_edit_resource', {'url': lien.url }) }}">edit</a>
-                    <a href="">stats</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">Pas de lien enregistrer sous ce profile</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <P>Pour l'url mettre: NomDeDomaine/l/{URL}</p>
+                    <tr>
+                        <td colspan="9">Pas de lien enregistrer sous ce profile</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <P>Pour l'url mettre: NomDeDomaine/l/{URL}</p>
+        </div>
+    </div>
 </div>
 {% endblock %}
