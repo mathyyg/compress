@@ -15,11 +15,7 @@ use Symfony\Component\Mime\Email;
 class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'app_contact')]
-    public function index(
-        Request $request,
-        EntityManagerInterface $manager,
-        MailerInterface $mailer
-        ): Response {
+    public function sendEmail(Request $request,EntityManagerInterface $manager,MailerInterface $mailer): Response {
 
         $form = $this->createForm(ContactType::class);
 
@@ -33,12 +29,11 @@ class ContactController extends AbstractController
             
             $email = (new Email())
             ->from($contact->getEmail())
-            ->to('project.compress@gmail.com')
-            ->subject('Time for Symfony Mailer!')
-            ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
+            ->to('julien.boisgard37@gmail.com')
+            ->subject('Nom :'.$contact->getFirstname() .' Prenom: '. $contact->getLastname() .' Email: '.$contact->getEmail()  )
+            ->text($contact->getMessage());
 
-        $mailer->send($email);
+            $mailer->send($email);
         
             
 

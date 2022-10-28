@@ -17,6 +17,7 @@ Projet de Programmation Web Serveur en 3ème année de Licence Informatique à l
 	- cd compress
 	- composer install
 	- on configure env ex "DATABASE_URL="mysql://root:root@127.0.0.1:3306/projet?serverVersion=10.4.24-MariaDB"
+	- ajouter votre server smtp ex MAILER_DSN=gmail://User:pass@default
 	- si la bdd n'existe pas sur votre serveur local : symfony console doctrine:database:create (verif d’avoir user si non ( symfony console doctrine:migrations:migrate ))
 	- npm install
 	- build le js/css : npm run watch (on peut fermer le terminal après le build)
