@@ -18,6 +18,39 @@
     </head>
     <body>
     {# <h1> bienvenue</h1> #}
+    {% if app.request.uri != url('app_accueil') 
+        and app.request.uri != url('app_login') 
+        and app.request.uri != url('app_register') %}
+    <div class="ui grid">
+        <div class="computer only row">
+            <div class="column">
+                <div class="ui red menu">
+                    <div class="left menu">
+                    </div>
+                    <div class="center menu">
+                        <div class="center menu">
+                            <a class="item " href="{{path('app_accueil')}}">
+                                <i class="home icon"></i>
+                                Accueil
+                            </a>
+                            <a class="item {% if 'profil' in app.request.uri %}active{% endif %}" href="{{path('app_profile')}}">
+                                <i class="user icon"></i>
+                                Profil
+                            </a>
+                            <a class="item {% if 'buy' in app.request.uri %}active{% endif %}" href="{{path('app_buy')}}">
+                                <i class="plus icon"></i>
+                                Devenir VIP
+                            </a>
+                        </div>
+                    </div>
+                    <div class="right menu">
+                        <a href="{{path('app_logout')}}" class="item"><i class="power off red icon"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
         {% block body %}{% endblock %}
         {% block script %}{% endblock %}
     </body>
