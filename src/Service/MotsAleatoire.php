@@ -2,12 +2,12 @@
 namespace App\Service;
 
 
-
 class MotsAleatoire 
 {
 
-    function getmots($longueur = 6 , $ressources = null )
+    function getmots()
     {
+        $longueur =6;
         $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $longueurMax = strlen($caracteres);
         $chaineAleatoire = '';
@@ -16,11 +16,10 @@ class MotsAleatoire
             $chaineAleatoire .= $caracteres[rand(0, $longueurMax - 1)];
         }
 
-        foreach ( $ressources as &$ressource) {
-            if( $ressource->getUrl()== $chaineAleatoire ){
-                return getmots();
+            if( $resourcerepository->findOneByurl($chaineAleatoire) != null){
+                return getmots($resourcerepository);
             }
-        }
+
 
         return $chaineAleatoire;
         

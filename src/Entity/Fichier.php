@@ -34,9 +34,9 @@ class Fichier
     #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(inversedBy: 'fichier', cascade: ['persist', 'remove'])]
     private ?Resource $resource = null;
+
 
     public function getId(): ?int
     {
@@ -44,13 +44,11 @@ class Fichier
     }
     public function setFile(?File $imageFile = null): void
     {
-        $this->file = new ReplacingFile($imageFile);
+        $this->file = $imageFile;
 
-        if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
-        }
+   
+        $this->updatedAt = new \DateTime('now');
+        
 
     }
 
@@ -112,12 +110,13 @@ class Fichier
         return $this->resource;
     }
 
-    public function setResource(resource $resource): self
+    public function setResource(?Resource $resource): self
     {
         $this->resource = $resource;
 
         return $this;
     }
+
 
     
 }

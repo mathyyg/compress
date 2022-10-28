@@ -39,28 +39,43 @@ class ResourceRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Resource[] Returns an array of Resource objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findByUrl($url) {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.url = :val')
+            ->setParameter('val', $url)
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Resource
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function checkAccess($resource, $user) {
+        if($resource->getUser()->getId() == $user->getId()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function findByUserAndFilter($value,$filters): array
+    {
+
+        $qb = $this->createQueryBuilder('r')
+            ->Where('r.user = :val')
+            ->setParameter('val', $value);
+
+            if (array_key_exists('type', $filters)
+            && $filters['type'] !== ''){
+                $qb->andWhere('r.type = :type')
+                ->setParameter('type', $filters['type']);
+            }
+            if (array_key_exists('url', $filters)
+            && $filters['url'] !== ''){
+                $qb->andwhere('r.url LIKE :url')
+                   ->setParameter('url', '%'.$filters['url'].'%');
+            }
+
+            return $qb->getQuery()->getResult();
+        ;
+    }
+
 }
