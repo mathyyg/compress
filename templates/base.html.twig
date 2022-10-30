@@ -30,6 +30,12 @@
                     </div>
                     <div class="center menu">
                         <div class="center menu">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="item {% if 'admin' in app.request.uri %}active{% endif %}" href="{{path('admin')}}">
+                                <i class="database icon"></i>
+                                Espace admin
+                            </a>
+                        {% endif %}
                             <a class="item " href="{{path('app_accueil')}}">
                                 <i class="home icon"></i>
                                 Accueil
@@ -41,6 +47,10 @@
                             <a class="item {% if 'buy' in app.request.uri %}active{% endif %}" href="{{path('app_buy')}}">
                                 <i class="plus icon"></i>
                                 Devenir VIP
+                            </a>
+                            <a class="item {% if 'contact' in app.request.uri %}active{% endif %}" href="{{path('app_contact')}}">
+                                <i class="envelope open icon"></i>
+                                Contact
                             </a>
                         </div>
                     </div>
@@ -67,10 +77,14 @@
                                 <i class="plus icon"></i>
                                 Devenir VIP
                             </a>
+                            <a class="item {% if 'contact' in app.request.uri %}active{% endif %}" href="{{path('app_contact')}}">
+                                <i class="envelope open outline icon"></i>
+                                Contact
+                            </a>
                         </div>
                     </div>
                     <div class="right menu">
-                        <a href="{{path('app_logout')}}" class="item"><i class="door open green icon"></i>Se connecter</a>
+                        <a href="{{path('app_login')}}" class="item"><i class="door open green icon"></i>Se connecter</a>
                     </div>
                 </div>
             {% endif %}
