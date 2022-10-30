@@ -9,6 +9,7 @@ use App\Entity\Fichier;
 use App\Entity\Link;
 use App\Entity\Avatar;
 use App\Entity\Contact;
+use App\Entity\SiteVariable;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -53,13 +54,21 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToCrud('Users', 'fa fa-user', User::class);
+        
+        yield MenuItem::section('Lien');
         yield MenuItem::linkToCrud('Resource', 'fa fa-cubes', Resource::class);
         yield MenuItem::linkToCrud('Utilisation', 'fa fa-arrow-up', Utilisation::class);
         yield MenuItem::linkToCrud('Link', 'fa fa-link', Link::class);
         yield MenuItem::linkToCrud('File', 'fa fa-file', Fichier::class);
+        
+        yield MenuItem::section('Users');
+        yield MenuItem::linkToCrud('Users', 'fa fa-user', User::class);
         yield MenuItem::linkToCrud('Avatar', 'fa fa-picture-o', Avatar::class);
         yield MenuItem::linkToCrud('Contact', 'fa fa-phone-square', Contact::class);
+
+        yield MenuItem::section('Site');
+        yield MenuItem::linkToCrud('Variable site', 'fa fa-sitemap', SiteVariable::class);
+        yield MenuItem::linkToUrl('Retour to accueil', 'fa fa-home', '/');
         yield MenuItem::linkToLogout('Logout', 'fa fa-sign-out');
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }

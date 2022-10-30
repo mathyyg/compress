@@ -28,13 +28,6 @@ class ProfileController extends AbstractController
             $this->addFlash('notice','Vos parametres sont à jour');
         }
 
-        if( array_key_exists('numero_de_carte', $info) && $info['numero_de_carte'] != '' ){
-            $user = $this->getUser();
-            $user->addRole("ROLE_VIP");
-            $userrepository->save($user,true);
-            return $this->redirectToRoute('app_profile');
-        }
-
         return $this->render('profile/index.html.twig', [
             'liens' => $resourcerepository->findByUserAndFilter($user->getid(),$request->request->all()),
             'form' => $form->createView(),

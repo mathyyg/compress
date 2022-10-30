@@ -14,7 +14,6 @@ class BuyController extends AbstractController
     public function index(Request $request,UserRepository $userrepository): Response
     {
         $info= $request->request->all();
-        //dd($info);
         if( array_key_exists('numero_de_carte', $info) && $info['numero_de_carte'] != '' ){
             $user = $this->getUser();
             $user->addRole("ROLE_VIP");
