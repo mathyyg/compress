@@ -48,6 +48,9 @@ class ResourceRepository extends ServiceEntityRepository
     }
 
     public function checkAccess($resource, $user) {
+        if($user == null) {
+            return false;
+        }
         if($resource->getUser()->getId() == $user->getId()) {
             return true;
         }
