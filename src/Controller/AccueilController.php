@@ -15,10 +15,10 @@ class AccueilController extends AbstractController
     public function index(SiteVariableRepository $siteVariableRepository): Response
     {
         $site_variables = $siteVariableRepository->findOnlyOne();
-        dd($site_variables);
+
         if($site_variables) {
-            $titre = $site_variables['titre'];
-            $description = $site_variables['description'];
+            $titre = $site_variables->getTitre();
+            $description = $site_variables->getDescription();
         }
         else {
             $newvariables = new SiteVariable;
