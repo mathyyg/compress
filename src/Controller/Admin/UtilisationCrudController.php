@@ -24,6 +24,7 @@ class UtilisationCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('ip'),
             DateField::new('date'),
+            TextField::new('url'),
             AssociationField::new('resource')->setCrudController(ResourceCrudController::class),
         ];
     }
