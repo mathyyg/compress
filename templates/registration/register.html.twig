@@ -6,6 +6,7 @@
     <div class="ui grid middle aligned" style="margin:3em;">
         <div class="row centered">
             <div class="ui container segment">
+            {% if not is_granted("ROLE_USER") %}
                 <h1>Inscription</h1> 
                 <div class="ui form">
                     {{ form_start(registrationForm) }}
@@ -19,6 +20,11 @@
                         <button class="ui button" type="submit" class="btn">S'inscrire</button>
                     {{ form_end(registrationForm) }}
                 </div>
+            {% else %}
+                <h1>Tu es déjà connecté</h1>
+                <p> Pas besoin de t'inscrire </p>
+                <a class="ui button" href="{{ path('app_accueil')}}">Retour à l'accueil</a>
+            {% endif %}
             </div>
         </div>
     </div>
