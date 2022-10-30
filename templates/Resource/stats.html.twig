@@ -24,7 +24,7 @@
                         <td>{% if uti.ip is defined %}{{uti.ip}}{% else %}Masqué{% endif %}</td>
                         <td>{{uti.date|date('d/m/Y H:i')}}</td>
                         <td>{{ressource.type}}</td>
-                        <td>Arracher julien</td>
+                        <td>{{uti.url}}</td>
                     </tr>
                 {% endfor %}
             </tbody>

@@ -142,7 +142,7 @@ class ResourceController extends AbstractController
                     $isAdmin = $this->getUser()->hasRole("ROLE_ADMIN");
                 }
                 $utilisations = $use_repository->findAllForResource($resource->getId(), $user, $isAdmin);
-                return $this->render('ressource/stats.html.twig', [
+                return $this->render('Resource/stats.html.twig', [
                     'controller_name' => 'RessourceController',
                     'utilisations' => $utilisations,
                     'ressource' => $resource
