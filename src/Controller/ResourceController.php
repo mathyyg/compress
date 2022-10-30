@@ -64,7 +64,7 @@ class ResourceController extends AbstractController
             }
         
 
-            return $this->render('Resource/index.html.twig', [
+            return $this->render('accueil/index.html.twig', [
             ]);
 
     }
