@@ -8,6 +8,7 @@ use App\Entity\Utilisation;
 use App\Entity\Fichier;
 use App\Entity\Link;
 use App\Entity\Avatar;
+use App\Entity\Contact;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+
 
 
 class DashboardController extends AbstractDashboardController
@@ -57,6 +59,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Link', 'fa fa-link', Link::class);
         yield MenuItem::linkToCrud('File', 'fa fa-file', Fichier::class);
         yield MenuItem::linkToCrud('Avatar', 'fa fa-picture-o', Avatar::class);
+        yield MenuItem::linkToCrud('Contact', 'fa fa-phone-square', Contact::class);
         yield MenuItem::linkToLogout('Logout', 'fa fa-sign-out');
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }

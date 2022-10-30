@@ -77,6 +77,7 @@ class ResourceController extends AbstractController
         $util= new Utilisation();
         $util->setIp($ip);
         $util->setResource($resource);
+        $util->setUrl($resource->getUrl());
         
 
         $info= $request->request->all();
