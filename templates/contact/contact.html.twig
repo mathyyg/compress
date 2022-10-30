@@ -3,11 +3,7 @@
 {% block title %}Contactez nous !{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
+{# 
 {{ form_start(form) }}
 <div class="row">
     <div class="col"> {{ form_row(form.firstname) }}</div>
@@ -21,5 +17,40 @@
     <button class="btn btn-primary">Envoyer</button>
 
 </div>
-{{ form_end(form) }}
+{{ form_end(form) }} #}
+<div class="ui centered grid">
+<div class="ten wide column">
+    <div class="ui center aligned segment">
+    {% for label, messages in app.flashes(['success']) %}
+        {% for message in messages %}
+            <div class="flash-{{label}}">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endfor %}
+        <h1 class="header">Nous contacter</h1>
+        <form class="ui form" action="{{path('app_contact')}}" method="POST">
+            <div class="two fields">
+                <div class=" field">
+                    <label>Prénom</label>
+                    <input type="text" name="contact[firstname]">
+                </div>
+                <div class=" field">
+                    <label>Nom</label>
+                    <input type="text" name="contact[lastname]">
+                </div>
+            </div>
+            <div class=" field">
+                <label>Email</label>
+                <input type="email" name="contact[email]">
+            </div>
+            <div class=" field">
+                <label>Message</label>
+                <textarea name="contact[message]"></textarea>
+            </div>
+            <button class="ui button" type="submit">Envoyer</button>
+        </form>
+    </div>
+</div>
+</div>
 {% endblock %}
