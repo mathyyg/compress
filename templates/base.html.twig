@@ -24,6 +24,7 @@
     <div class="ui grid">
         <div class="computer only row">
             <div class="column">
+            {% if is_granted('ROLE_USER') %}
                 <div class="ui red menu">
                     <div class="left menu">
                     </div>
@@ -48,6 +49,31 @@
                     </div>
                 </div>
             </div>
+            {% else %}
+                <div class="ui red menu">
+                    <div class="left menu">
+                    </div>
+                    <div class="center menu">
+                        <div class="center menu">
+                            <a class="item " href="{{path('app_accueil')}}">
+                                <i class="home icon"></i>
+                                Accueil
+                            </a>
+                            <a class="item {% if 'register' in app.request.uri %}active{% endif %}" href="{{path('app_register')}}">
+                                <i class="edit icon"></i>
+                                Créer un compte
+                            </a>
+                            <a class="item {% if 'buy' in app.request.uri %}active{% endif %}" href="{{path('app_buy')}}">
+                                <i class="plus icon"></i>
+                                Devenir VIP
+                            </a>
+                        </div>
+                    </div>
+                    <div class="right menu">
+                        <a href="{{path('app_logout')}}" class="item"><i class="door open green icon"></i>Se connecter</a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
     {% endif %}
