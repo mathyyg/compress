@@ -12,6 +12,7 @@ use App\Entity\User;
 use App\Form\UserFormType;
 use App\Form\ResourceFormType;
 use App\Entity\Resource;
+use App\Service\AcceuilService;
 
 class ProfileController extends AbstractController
 {
@@ -21,14 +22,23 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
         $form = $this->createForm(UserFormType::class, $user);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $userrepository->save($user, true);
+            $this->addFlash('notice','Vos parametres sont à jour');
         }
+
+        if( array_key_exists('numero_de_carte', $info) && $info['numero_de_carte'] != '' ){
+            $user = $this->getUser();
+            $user->addRole("ROLE_VIP");
+            $userrepository->save($user,true);
+            return $this->redirectToRoute('app_profile');
+        }
+
         return $this->render('profile/index.html.twig', [
             'liens' => $resourcerepository->findByUserAndFilter($user->getid(),$request->request->all()),
             'form' => $form->createView(),
-            'user' => $user
+            'user' => $user,
         ]);
     }
 

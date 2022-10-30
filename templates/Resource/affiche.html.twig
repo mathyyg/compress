@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Success  page!{% endblock %}
+{% block title %}Recuperation du fichier!{% endblock %}
 
 {% block body %}
 <style>
@@ -10,9 +10,10 @@
 
 <div>
     {% if fichier %}
-    <p> La photo</p>
-    
-    <td><a download href="{{asset (vich_uploader_asset (fichier, 'file'))}}" target="_blank"> Clic pour telecharger </a> </td>
+    <div class="ui container center aligned">
+        <p> La FichierS</p>
+        <td><a download href="{{asset (vich_uploader_asset (fichier, 'file'))}}" target="_blank"> Clic-ici pour telecharger </a> </td>
+    </div>
     {% endif %}
 </div>
 {% endblock %}

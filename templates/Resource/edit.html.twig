@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfileControlerController!{% endblock %}
+{% block title %}Edit url{% endblock %}
 
 {% block body %}
 <style>
@@ -9,10 +9,20 @@
 </style>
 
     {% if is_granted('ROLE_VIP') %}
-    <h1>Edite url</h1>
-        {{ include('profile/_form.html.twig') }}
+    <div class="ui grid middle aligned" style="margin:3em;">
+        <div class="row centered">
+            <div class="ui container segment">
+                <h1>Edité l'url</h1> 
+                <div class="ui form">
+                {{ include('Resource/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
     {% else %}
-    <h1>Tu doit acheter le VIP</h1>
+    <div class="ui container center aligned">
+        <h1>Tu doit acheter le VIP</h1>
+    </div>
 
     {% endif %}
 {% endblock %}
