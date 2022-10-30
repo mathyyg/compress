@@ -3,34 +3,13 @@
 {% block title %}Compress - Accueil{% endblock %}
 
 {% block body %}
-<div class="ui large top fixed menu transition hidden">
-    <div class="ui container">
-        <a class="item {% if 'accueil' in app.request.uri %}active{% endif %}">Accueil</a>
-        <a class="item {% if 'fonctionnalites' in app.request.uri %}active{% endif %}">Fonctionnalités</a>
-        <a class="item  {% if 'about' in app.request.uri %}active{% endif %}">À propos</a>
-        <div class="right secondary pointing menu">
-        {% if app.user %}
-            <a href="{{path('app_profile')}}" class="ui item">
-                Mon compte
-            </a>
-            <a href="{{path('app_logout')}}" class="ui item">
-                Déconnexion
-            </a>
-        {% else %}
-            <a href="{{path('app_login')}}" class="ui item">
-                Connexion
-            </a>
-        {% endif %}
-        </div>
-    </div>
-</div>
 
 <div class="ui inverted center aligned segment premier" id="premier" style="border-radius:0;padding-bottom:10em;margin-top:0;">
     <div class="ui container">
         <div class="ui inverted secondary pointing menu">
             <a href="#" class="item active">Accueil</a>
             <a href="#fonctions" class="item">Fonctionnalités</a>
-            <a class="item  {% if 'about' in app.request.uri %}active{% endif %}">À propos</a>
+            <a href="#apropos" class="item">À propos</a>
             <a href="{{path('app_contact')}}" class="item">Contact</a>
             <div class="right secondary pointing menu">
             {% if app.user %}
@@ -54,34 +33,42 @@
         </div>
     </div>
     <div class="ui text container">
-    <h1 class="ui inverted header" style="padding-top:2em; font-size:4em;">
-        {{titre}}
-    </h1>
-    <div class="ui buttons">
-        <button id="butlink" class="ui violet active button">Lien</button>
-        <button id="butfile" class="ui violet button">Fichier</button>
-    </div>
-    <h2 class="ui inverted header">{{description}}</h2>
-    {# <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div> #}
-    <form class="ui form" action="{{ path('app_add') }}" method="POST" enctype="multipart/form-data">
-        <div id="fieldlink" class="field" style="margin-bottom:0;">
-            <input type="text" name="ressource[]" placeholder="Entrez un lien à raccourcir ...">
+        <h1 class="ui inverted header" style="padding-top:2em; font-size:4em;">
+            {{titre}}
+        </h1>
+        <div class="ui buttons">
+            <button id="butlink" class="ui violet active button">Lien</button>
+            <button id="butfile" class="ui violet button">Fichier</button>
         </div>
-        <div id="fieldfile" class="field" style="display:none;">
-            <input type="file" name="ressource[]" accept="image/*,.pdf">
-        </div><br>
-        {% if is_granted('ROLE_VIP') %}
-        <div class="ui icon input" style="width:300px;">
-            <input id="inputpass" name="pass" type="password" placeholder="Optionnel: ajoutez un mot de passe" >
-            <i class="circular eye link icon"></i>
-        </div>
-        {% endif %}
-        <input id="inputtype" type="hidden" name="type">
-        <button class="ui right labeled icon basic inverted violet button" type="submit">
-            <i class="right arrow icon"></i>
-            Raccourcir
-        </button>
-    </form>
+        <h2 class="ui inverted header">{{description}}</h2>
+        {# <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div> #}
+        <form class="ui form" action="{{ path('app_add') }}" method="POST" enctype="multipart/form-data">
+            <div id="fieldlink" class="field" style="margin-bottom:0;">
+                <input type="text" name="ressource[]" placeholder="Entrez un lien à raccourcir ...">
+            </div>
+            <div id="fieldfile" class="field" style="display:none;">
+                <input type="file" name="ressource[]" accept="image/*,.pdf">
+            </div><br>
+            {% if is_granted('ROLE_VIP') %}
+            <div class="ui icon input" style="width:300px;">
+                <input id="inputpass" name="pass" type="password" placeholder="Optionnel: ajoutez un mot de passe" >
+                <i class="circular eye link icon"></i>
+            </div>
+            {% endif %}
+            <input id="inputtype" type="hidden" name="type">
+            <button class="ui right labeled icon basic inverted violet button" type="submit">
+                <i class="right arrow icon"></i>
+                Raccourcir
+            </button>
+        </form>
+        <br><br>
+        <h3 class="ui inverted header">Entrez la fin de votre lien raccourci pour en avoir les stats</h3>
+            <div class="ui input">
+                <input id="inputstats" type="text" name="url" placeholder="Entrez la FIN du lien ...">
+            </div>
+            <button id="butstats" class="ui basic inverted button" type="submit">
+                Voir les statistiques
+            </button>
     </div>
 </div>
 <div id="fonctions" class="ui center aligned segment" style="border:none;border-radius:0;box-shadow:none;padding-top:4em;">
@@ -144,7 +131,7 @@
             </div>
         </div>
         <br><br>
-        <a class="ui huge button">Créer votre compte</a>
+        <a href="{{path('app_register')}}" class="ui huge button">Créer votre compte</a>
     </div>
 </div>
 <div class="ui center aligned segment deuxieme" style="border-radius:0;box-shadow:none;padding-top:4em;">
@@ -193,72 +180,21 @@
             </tbody>
         </table>
     </div>
-</div><br><br><br><br><br>
-<div class="ui center aligned segment deuxieme" style="border-radius:0;box-shadow:none;padding-top:4em;">
+</div>
+<div id="apropos" class="ui center aligned segment inverted troisieme" style="border-radius:0;box-shadow:none;padding-top:4em;margin-bottom:0;padding-bottom:4em;">
     <div class="ui stackable container">
-        <h1 class="header">Comparez les fonctionnalités</h1>
-        <table class="ui definition celled table">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Anonyme</th>
-                    <th>Membre</th>
-                    <th>VIP</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Raccoucir un lien</td>
-                    <td><i class="green icon checkmark"></i></td>
-                    <td><i class="green icon checkmark"></i></td>
-                    <td><i class="green icon checkmark"></i></td>
-                </tr>
-                <tr>
-                    <td>Mettre en ligne un fichier</td>
-                    <td><i class="green icon checkmark"></i></td>
-                    <td><i class="green icon checkmark"></i></td>
-                    <td><i class="green icon checkmark"></i></td>
-                </tr>
-                <tr>
-                    <td>Voir les statistiques d'un lien</td>
-                    <td><i class="red icon times"></i></td>
-                    <td><i class="green icon checkmark"></i></td>
-                    <td><i class="green icon checkmark"></i></td>
-                </tr>
-                <tr>
-                    <td>Personnaliser le lien</td>
-                    <td><i class="red icon times"></i></td>
-                    <td><i class="red icon times"></i></td>
-                    <td><i class="green icon checkmark"></i></td>
-                </tr>
-                <tr>
-                    <td>Protéger un lien par un mot de passe</td>
-                    <td><i class="red icon times"></i></td>
-                    <td><i class="red icon times"></i></td>
-                    <td><i class="green icon checkmark"></i></td>
-                </tr>
-            </tbody>
-        </table>
+        <h1 class="header">À propos</h1>
+        <p>Ce site web est le résultat d'un projet de Programmation Web Serveur, 
+            module de L3 Informatique à l'université de Tours.<br>
+            Projet réalisé par Julien Boisgard, François Bardel, Yvelin Gerbeaud et Mathys Gagner</p>
     </div>
-</div><br><br><br><br><br>
+</div>
 
 {% endblock %}
 {% block script %}
 <script>
 $(function() {
     $('#inputtype').val('link');
-
-    $('.deuxieme').visibility({
-        once: false,
-        onTopPassed: function() {
-            $('.fixed.menu').transition('fade in');
-            console.log("passé");
-        },
-        onTopPassedReverse: function() {
-            $('.fixed.menu').transition('fade out');
-            console.log("passé reverse");
-        }
-    });
 
     $('#butlink').click(function() {
         console.log("bouton link");
@@ -279,6 +215,9 @@ $(function() {
         console.log($('#inputtype').val());
     });
     
+    $('#butstats').click(function() {
+        window.location.replace("http://127.0.0.1:8000/stats/"+$('#inputstats').val());
+    });
     
     {% if is_granted('ROLE_VIP') %}
     $('.circular.eye.icon').click(function() {
