@@ -42,10 +42,10 @@ class UtilisationRepository extends ServiceEntityRepository
     public function findAllForResource($resource_id, $user, $admin = false) {
         $query = $this->createQueryBuilder('u');
         if(!$user) {
-            $query->select('u.date');
+            $query->select('u.date', 'u.url');
         }
         if ($admin) {
-            $query->select('u.date', 'u.ip');
+            $query->select('u.date', 'u.ip', 'u.url');
         }
         $query->andWhere('u.resource = :val1')
               ->setParameter('val1', $resource_id);
