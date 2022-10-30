@@ -7,6 +7,7 @@
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
+<div class="ui container center aligned">
     {% if is_granted('ROLE_VIP') %}
     <div >
         <h1>Merci de ton achat</h1>
@@ -16,46 +17,85 @@
     <h1>Achete ton grade VIP pour 30euro</h1>
     <p>Tu pourras personaliser t'es liens et les securiser avec un mots de passe </p>
       {% if is_granted('ROLE_USER') %}
-      <i>fictif</i>
-        <form action="{{ path('app_buy') }}" method="POST">
-        <legend>Informations CB</legend>
-        <ol>
-          <li>
-            <fieldset>
-              <legend>Type de carte bancaire</legend>
-              <ol>
-                <li>
-                  <input id="visa" name="type_de_carte" type=radio>
-                  <label for="visa">VISA</label>
-                </li>
-                <li>
-                  <input id="mastercard" name="type_de_carte" type=radio>
-                  <label for="mastercard">Mastercard</label>
-                </li>
-              </ol>
-            </fieldset>
-          </li>
-          <li>
-            <label for="numero_de_carte">Numéro de carte</label>
-            <input id="numero_de_carte" name="numero_de_carte" type="number" required>
-          </li>
-          <li>
-            <label for="securite">Code sécurité</label>
-            <input id="securit"e name="securite" type="number" required>
-          </li>
-          <li>
-            <label for="nom_porteur">Nom du porteur</label>
-            <input id="nom_porteur" name="nom_porteur" type="text" placeholder="Même nom que sur la carte" required>
-          </li>
-        </ol>
-      </fieldset>
-    <button type="submit">J'achète !</button>
-    </form>
+      <i>(fictif)</i>
+      <form class="ui form" action="{{ path('app_buy') }}" method="POST">
+
+        <h4 class="ui dividing header">Information Carte</h4>
+          <div class="field">
+            <label>Type de carte</label>
+            <div class="ui selection dropdown">
+              <input type="hidden" name="type_de_carte" required>
+              <div class="default text">Type</div>
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <div class="item" data-value="visa">
+                  <i class="visa icon"></i>
+                  Visa
+                </div>
+                <div class="item" data-value="amex">
+                  <i class="amex icon"></i>
+                  American Express
+                </div>
+                <div class="item" data-value="discover">
+                  <i class="discover icon"></i>
+                  Discover
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="fields">
+            <div class="seven wide field">
+              <label>Numéro de Carte</label>
+              <input type="text" name="numero_de_carte" maxlength="16" placeholder="Card #" required>
+            </div>
+            <div class="three wide field">
+              <label>CVC</label>
+              <input type="text" name="code_de_carte" maxlength="3" placeholder="CVC" required>
+            </div>
+            <div class="six wide field">
+              <label>Expiration</label>
+              <div class="fields">
+                <div class="eight wide field">
+                  <select class="ui fluid search dropdown" name="mois_de_carte" required>
+                    <option value="">Mois</option>
+                    <option value="1">Janvier</option>
+                    <option value="2">Février</option>
+                    <option value="3">Mars</option>
+                    <option value="4">Avril</option>
+                    <option value="5">Mai</option>
+                    <option value="6">Juin</option>
+                    <option value="7">Juillet</option>
+                    <option value="8">Aout</option>
+                    <option value="9">Septenbre</option>
+                    <option value="10">Octobre</option>
+                    <option value="11">Novembre</option>
+                    <option value="12">Decembre</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <input type="text" name="annee_de_carte" maxlength="4" placeholder="Year" required>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui container left aligned" tabindex="0">
+            <input type="submit" class="ui button" value="payer">
+          </div>
+      </form>
   {% else %}
-    <form action="{{ path('app_login') }}" method="POST">
+    <form class="ui form" action="{{ path('app_login') }}" method="POST">
        <label for="connecter">tu doit etre connecter pour acheter</label>
-       <input id="connecter" type="submit" value="se connecter">
+       <input class="ui button"  id="connecter" type="submit" value="se connecter">
     </form>
   {% endif %}
 {% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+$('.dropdown')
+  .dropdown()
+;
+</script>
 {% endblock %}

@@ -11,6 +11,11 @@
   <div class="two column row">
     <div class="ui center aligned container segment column" >
         <h1 class="ui header">Profile</h1>
+            {% for message in app.flashes('notice') %}
+                <div class="flash-notice">
+                    <span class="ui success text">{{ message }}</span>
+                </div>
+            {% endfor %}
         <div class="ui form container center aligned">
         {{ include('profile/_form.html.twig') }}
         </div>

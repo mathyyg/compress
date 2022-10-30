@@ -8,19 +8,24 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="form">
-    
-    <form action="{{ path('app_view', { 'url': ressource.url }) }}" method="POST">
-        <div>
-            <label for="pass">Mots de passe</label>
-            <input type="text" id="pass" name="pass" placeholder="mots de passe" required>
-            <form>
-        </div>
 
-        <div>
-            <input type="submit" value="allez" >
+    <div class="ui grid middle aligned" style="margin:3em;">
+        <div class="row centered">
+            <div class="ui container segment">
+                <h1>Edité l'url</h1> 
+                <form class="ui form" action="{{ path('app_view', { 'url': ressource.url }) }}" method="POST">
+                    <div>
+                        <label for="pass">Lien sécuriser</label>
+                        <input type="text" id="pass" name="pass" placeholder="mots de passe" required>
+                        <form>
+                    </div>
+
+                    <div>
+                        <input class="ui button" type="submit" value="allez" >
+                    </div>
+                </form>
+            </div>
         </div>
-    </form>
-    
-</div>
+    </div>
+        
 {% endblock %}
