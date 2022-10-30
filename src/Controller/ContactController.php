@@ -20,13 +20,18 @@ class ContactController extends AbstractController
         $form = $this->createForm(ContactType::class);
 
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
-            $contact = $form->getData();
+        $info = $request->request->all();
+        if($info != null) {
+            $contact = new Contact();
+            $contact->setFirstname($info['contact']['firstname']);
+            $contact->setLastname($info['contact']['lastname']);
+            $contact->setEmail($info['contact']['email']);
+            $contact->setMessage($info['contact']['message']);
+            // dd($contact);
 
             $manager->persist($contact);
             $manager->flush();
-            
-            
+
             $email = (new Email())
             ->from($contact->getEmail())
             ->to('julien.boisgard37@gmail.com')
@@ -35,15 +40,34 @@ class ContactController extends AbstractController
 
             $mailer->send($email);
         
-            
-
-            $this->addFlash('success', 'Vore message a été envoyé');
+            $this->addFlash('success', 'Votre message a été envoyé');
             return $this->redirectToRoute('app_contact');
 
         }
+        // if($form->isSubmitted() && $form->isValid()) {
+        //     $contact = $form->getData();
+
+        //     // dd($contact);
+        //     $manager->persist($contact);
+        //     $manager->flush();
+            
+            
+        //     $email = (new Email())
+        //     ->from($contact->getEmail())
+        //     ->to('julien.boisgard37@gmail.com')
+        //     ->subject('Nom :'.$contact->getFirstname() .' Prenom: '. $contact->getLastname() .' Email: '.$contact->getEmail()  )
+        //     ->text($contact->getMessage());
+
+        //     $mailer->send($email);
+        
+    
+        //     $this->addFlash('success', 'Vore message a été envoyé');
+        //     return $this->redirectToRoute('app_contact');
+
+        // }
 
         return $this->render('contact/contact.html.twig', [
-            'form' => $form->createView()
+            // 'form' => $form->createView()
         ]);
     }
     

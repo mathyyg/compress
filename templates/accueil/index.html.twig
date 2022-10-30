@@ -31,8 +31,14 @@
             <a href="#" class="item active">Accueil</a>
             <a href="#fonctions" class="item">Fonctionnalités</a>
             <a class="item  {% if 'about' in app.request.uri %}active{% endif %}">À propos</a>
+            <a href="{{path('app_contact')}}" class="item">Contact</a>
             <div class="right secondary pointing menu">
             {% if app.user %}
+                {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{path('admin')}}" class="ui item">
+                    Administration
+                </a>
+                {% endif %}
                 <a href="{{path('app_profile')}}" class="ui item">
                     Mon compte
                 </a>
@@ -49,13 +55,13 @@
     </div>
     <div class="ui text container">
     <h1 class="ui inverted header" style="padding-top:2em; font-size:4em;">
-        Compress
+        {{titre}}
     </h1>
     <div class="ui buttons">
         <button id="butlink" class="ui violet active button">Lien</button>
         <button id="butfile" class="ui violet button">Fichier</button>
     </div>
-    <h2 class="ui inverted header">Obtenez un lien plus court pour vos ressources et fichiers</h2>
+    <h2 class="ui inverted header">{{description}}</h2>
     {# <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div> #}
     <form class="ui form" action="{{ path('app_add') }}" method="POST" enctype="multipart/form-data">
         <div id="fieldlink" class="field" style="margin-bottom:0;">
@@ -89,9 +95,9 @@
                     </div>
                     <div class="description">
                         <div class="ui bulleted list">
-                            <div class="item">taetjgoa</div>
-                            <div class="item">taetjgoa</div>
-                            <div class="item">taetjgoa</div>
+                            <div class="item">Raccourcir un lien</div>
+                            <div class="item">Mettre en ligne un fichier</div>
+                            <div class="item">Voir certaines statistiques des liens anonymes</div>
                         </div>
                     </div>
                 </div>
@@ -106,10 +112,11 @@
                         Membre
                     </div>
                     <div class="description">
-                        - yyyyyyyyyy-
-                        - ypeyqkyys
-                        - yksehb
-
+                        <div class="ui bulleted list">
+                            <div class="item">Voir toutes les statistiques (privées)</div>
+                            <div class="item">Voir tous ses liens</div>
+                            <div class="item">et toutes les fonctionnalités d'un utilisateur anonyme</div>
+                        </div>
                     </div>
                 </div>
                 <div class="ui blue button">
@@ -119,14 +126,15 @@
             </div>
             <div class="ui orange card">
                 <div class="content">
-                    <div class="header" style>
+                    <div class="header" style="color:orange;">
                         VIP
                     </div>
-                    <div class="description">
-                        - yyyyyyyyyy-
-                        - ypeyqkyys
-                        - yksehb
-
+                     <div class="description">
+                        <div class="ui bulleted list">
+                            <div class="item">Mettre un mot de passe sur un lien</div>
+                            <div class="item">Personnaliser le lien raccourci</div>
+                            <div class="item">et toutes les fonctionnalités d'un anonyme et d'un membre</div>
+                        </div>
                     </div>
                 </div>
                 <div class="ui orange button">
@@ -142,34 +150,92 @@
 <div class="ui center aligned segment deuxieme" style="border-radius:0;box-shadow:none;padding-top:4em;">
     <div class="ui stackable container">
         <h1 class="header">Comparez les fonctionnalités</h1>
-        <table class="ui celled table">
+        <table class="ui definition celled table">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Notes</th>
+                    <th></th>
+                    <th>Anonyme</th>
+                    <th>Membre</th>
+                    <th>VIP</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>No Name Specified</td>
-                    <td>Unknown</td>
-                    <td class="negative">None</td>
-                </tr>
-                <tr class="positive">
-                    <td>Jimmy</td>
-                    <td><i class="icon checkmark"></i> Approved</td>
-                    <td>None</td>
+                    <td>Raccoucir un lien</td>
+                    <td><i class="green icon checkmark"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
                 </tr>
                 <tr>
-                    <td>Jamie</td>
-                    <td>Unknown</td>
-                    <td class="positive"><i class="icon close"></i> Requires call</td>
+                    <td>Mettre en ligne un fichier</td>
+                    <td><i class="green icon checkmark"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
                 </tr>
-                    <tr class="negative">
-                    <td>Jill</td>
-                    <td>Unknown</td>
-                    <td>None</td>
+                <tr>
+                    <td>Voir les statistiques d'un lien</td>
+                    <td><i class="red icon times"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
+                </tr>
+                <tr>
+                    <td>Personnaliser le lien</td>
+                    <td><i class="red icon times"></i></td>
+                    <td><i class="red icon times"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
+                </tr>
+                <tr>
+                    <td>Protéger un lien par un mot de passe</td>
+                    <td><i class="red icon times"></i></td>
+                    <td><i class="red icon times"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div><br><br><br><br><br>
+<div class="ui center aligned segment deuxieme" style="border-radius:0;box-shadow:none;padding-top:4em;">
+    <div class="ui stackable container">
+        <h1 class="header">Comparez les fonctionnalités</h1>
+        <table class="ui definition celled table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Anonyme</th>
+                    <th>Membre</th>
+                    <th>VIP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Raccoucir un lien</td>
+                    <td><i class="green icon checkmark"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
+                </tr>
+                <tr>
+                    <td>Mettre en ligne un fichier</td>
+                    <td><i class="green icon checkmark"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
+                </tr>
+                <tr>
+                    <td>Voir les statistiques d'un lien</td>
+                    <td><i class="red icon times"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
+                </tr>
+                <tr>
+                    <td>Personnaliser le lien</td>
+                    <td><i class="red icon times"></i></td>
+                    <td><i class="red icon times"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
+                </tr>
+                <tr>
+                    <td>Protéger un lien par un mot de passe</td>
+                    <td><i class="red icon times"></i></td>
+                    <td><i class="red icon times"></i></td>
+                    <td><i class="green icon checkmark"></i></td>
                 </tr>
             </tbody>
         </table>
