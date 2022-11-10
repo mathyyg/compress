@@ -49,6 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
+        $this->blocked = false;
         $this->created_at = new \DateTime('now');
         $this->resources = new ArrayCollection();
     }
