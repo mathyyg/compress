@@ -25,12 +25,13 @@ Projet de Programmation Web Serveur en 3ème année de Licence Informatique à l
 (ATTENTION: si vous utilisez wamp et mariadb, dans le my.ini changer le "innodb-default-row-format" de "compact" à "dynamic",
 redémarrer le service mariadb et créer la bdd) 
 
-- 7: créer les migrations et les exécuter
+- 7: créer les migrations et les exécuter (cela donnera une base de données vide mais fonctionnelle) 
+- OU 7 bis : importer le fichier dans votre phpMyAdmin ./preconfig/compress.sql (base de données peuplée) PUIS copier le dossier ./preconfig/public dans la racine
+
 - 8: npm install
 - 9: npm run watch (peut fermer une fois le build terminé)
 - 10: "symfony serve" pour lancer le serveur
 - 11: ouvrir la page d'accueil "127.0.0.1:8000" puis se créer un compte avec register
 
 - (12 : dans php.ini, enlever le ; de la ligne ;extension=intl)
-- (13 : accéder à la partie /admin crée un premier compte et lui ajouter le rôle “ROLE_ADMIN” avec les guillemet)
-- OU (13 : importer la base de données déjà peuplée avec les fichiers dans public)
+- (13: si la base de données est vide (étape 7.) : accéder à la partie /admin crée un premier compte et lui ajouter le rôle “ROLE_ADMIN” avec les guillemet)
