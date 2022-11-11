@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : jeu. 10 nov. 2022 à 11:21
--- Version du serveur : 10.4.24-MariaDB
--- Version de PHP : 8.1.6
+-- Hôte : 127.0.0.1:3307
+-- Généré le : ven. 11 nov. 2022 à 12:50
+-- Version du serveur : 10.6.5-MariaDB
+-- Version de PHP : 7.4.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `projet`
+-- Base de données : `projetwebserveur`
 --
 
 -- --------------------------------------------------------
@@ -27,21 +27,24 @@ SET time_zone = "+00:00";
 -- Structure de la table `avatar`
 --
 
-CREATE TABLE `avatar` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `avatar`;
+CREATE TABLE IF NOT EXISTS `avatar` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `size` int(11) NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_1677722FA76ED395` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `avatar`
 --
 
 INSERT INTO `avatar` (`id`, `user_id`, `name`, `size`, `updated_at`) VALUES
-(2, 5, '53c7a000b4b1655ad23cc614280373b9fe0360e657fb98f702.png', 19090, '2022-11-10 11:07:41'),
-(3, 7, 'ef75f519457aac3982c485a320a1b2d4455ea5263443541393.png', 23924, '2022-11-10 11:12:49');
+(3, 7, 'ef75f519457aac3982c485a320a1b2d4455ea5263443541393.png', 23924, '2022-11-10 11:12:49'),
+(4, 9, '44f833e4eafa6727307ceab1ba63c721fb688b545348aa5c29.png', 19090, '2022-11-11 12:49:23');
 
 -- --------------------------------------------------------
 
@@ -49,13 +52,15 @@ INSERT INTO `avatar` (`id`, `user_id`, `name`, `size`, `updated_at`) VALUES
 -- Structure de la table `contact`
 --
 
-CREATE TABLE `contact` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `contact`;
+CREATE TABLE IF NOT EXISTS `contact` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `message` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `message` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -63,11 +68,13 @@ CREATE TABLE `contact` (
 -- Structure de la table `doctrine_migration_versions`
 --
 
-CREATE TABLE `doctrine_migration_versions` (
-  `version` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `doctrine_migration_versions`;
+CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
+  `version` varchar(191) COLLATE utf8mb3_unicode_ci NOT NULL,
   `executed_at` datetime DEFAULT NULL,
-  `execution_time` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `execution_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Déchargement des données de la table `doctrine_migration_versions`
@@ -82,14 +89,17 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 -- Structure de la table `fichier`
 --
 
-CREATE TABLE `fichier` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `fichier`;
+CREATE TABLE IF NOT EXISTS `fichier` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `resource_id` int(11) DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `size` int(11) NOT NULL,
   `updated_at` datetime NOT NULL,
-  `extension` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `extension` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_9B76551F89329D25` (`resource_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `fichier`
@@ -106,11 +116,14 @@ INSERT INTO `fichier` (`id`, `resource_id`, `name`, `size`, `updated_at`, `exten
 -- Structure de la table `link`
 --
 
-CREATE TABLE `link` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `link`;
+CREATE TABLE IF NOT EXISTS `link` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `resource_id` int(11) DEFAULT NULL,
-  `input_link` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `input_link` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_36AC99F189329D25` (`resource_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `link`
@@ -127,15 +140,20 @@ INSERT INTO `link` (`id`, `resource_id`, `input_link`) VALUES
 -- Structure de la table `messenger_messages`
 --
 
-CREATE TABLE `messenger_messages` (
-  `id` bigint(20) NOT NULL,
+DROP TABLE IF EXISTS `messenger_messages`;
+CREATE TABLE IF NOT EXISTS `messenger_messages` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `headers` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `queue_name` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL,
   `available_at` datetime NOT NULL,
-  `delivered_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `delivered_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_75EA56E0FB7336F0` (`queue_name`),
+  KEY `IDX_75EA56E0E3BD61CE` (`available_at`),
+  KEY `IDX_75EA56E016BA31DB` (`delivered_at`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `messenger_messages`
@@ -152,15 +170,19 @@ INSERT INTO `messenger_messages` (`id`, `body`, `headers`, `queue_name`, `create
 -- Structure de la table `resource`
 --
 
-CREATE TABLE `resource` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `resource`;
+CREATE TABLE IF NOT EXISTS `resource` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_created` datetime NOT NULL,
   `date_modified` datetime DEFAULT NULL,
-  `resource_password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `resource_password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_BC91F416F47645AE` (`url`),
+  KEY `IDX_BC91F416A76ED395` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `resource`
@@ -180,11 +202,13 @@ INSERT INTO `resource` (`id`, `user_id`, `type`, `url`, `date_created`, `date_mo
 -- Structure de la table `site_variable`
 --
 
-CREATE TABLE `site_variable` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `site_variable`;
+CREATE TABLE IF NOT EXISTS `site_variable` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `titre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `site_variable`
@@ -199,25 +223,28 @@ INSERT INTO `site_variable` (`id`, `titre`, `description`) VALUES
 -- Structure de la table `user`
 --
 
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
   `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `pseudo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` date NOT NULL,
-  `blocked` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `blocked` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `user`
 --
 
 INSERT INTO `user` (`id`, `email`, `roles`, `password`, `pseudo`, `created_at`, `blocked`) VALUES
-(5, 'admin@mail.fr', '[\"ROLE_ADMIN\"]', '$2y$13$rDFdRc6HgmA1kg9SabO0meur6tAclZUDxRJKUMBdAGkU.SZtLgdNm', 'admin37', '2022-11-10', 0),
-(6, 'user1@mail.fr', '[\"ROLE_VIP\"]', '$2y$13$wgMjMy4mRjDQf74vYA9jo.KWsbkG93g1WHIgYj84MULS/uWbraOJ2', 'user1', '2022-11-10', 0),
+(6, 'user1@mail.fr', '[ \"ROLE_VIP\"]', '$2y$13$wgMjMy4mRjDQf74vYA9jo.KWsbkG93g1WHIgYj84MULS/uWbraOJ2', 'user1', '2022-11-10', 0),
 (7, 'user2@mail.fr', '[]', '$2y$13$AqvADYmmdk/82eWS7gJPKuWqpXYNXDVNw6oQ6U56abehEGm8RYUg2', 'user2', '2022-11-10', 0),
-(8, 'user3@mail.fr', '[]', '$2y$13$t1iACn4VthFrm98da.TShOcByoCKj/SxJCl2sI7JrFb1xQrMHCOv.', 'user3', '2022-11-10', 1);
+(8, 'user3@mail.fr', '[]', '$2y$13$t1iACn4VthFrm98da.TShOcByoCKj/SxJCl2sI7JrFb1xQrMHCOv.', 'user3', '2022-11-10', 1),
+(9, 'admin@mail.fr', '[\"ROLE_ADMIN\"]', '$2y$13$eIRzoSOebDdDEO7P8rOU0.x.ceKXOGfLPHsDw9f8TbnWR3Pn42Y6C', 'admin37', '2022-11-11', 0);
 
 -- --------------------------------------------------------
 
@@ -225,13 +252,16 @@ INSERT INTO `user` (`id`, `email`, `roles`, `password`, `pseudo`, `created_at`, 
 -- Structure de la table `utilisation`
 --
 
-CREATE TABLE `utilisation` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `utilisation`;
+CREATE TABLE IF NOT EXISTS `utilisation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `resource_id` int(11) NOT NULL,
   `ip` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_B02A3C4389329D25` (`resource_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `utilisation`
@@ -250,138 +280,6 @@ INSERT INTO `utilisation` (`id`, `resource_id`, `ip`, `date`, `url`) VALUES
 (43, 79, '127.0.0.1', '2022-11-10 11:14:19', 'g5n52W'),
 (44, 80, '127.0.0.1', '2022-11-10 11:16:30', 'ILbtqi'),
 (45, 80, '127.0.0.1', '2022-11-10 11:16:36', 'ILbtqi');
-
---
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `avatar`
---
-ALTER TABLE `avatar`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_1677722FA76ED395` (`user_id`);
-
---
--- Index pour la table `contact`
---
-ALTER TABLE `contact`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `doctrine_migration_versions`
---
-ALTER TABLE `doctrine_migration_versions`
-  ADD PRIMARY KEY (`version`);
-
---
--- Index pour la table `fichier`
---
-ALTER TABLE `fichier`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_9B76551F89329D25` (`resource_id`);
-
---
--- Index pour la table `link`
---
-ALTER TABLE `link`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_36AC99F189329D25` (`resource_id`);
-
---
--- Index pour la table `messenger_messages`
---
-ALTER TABLE `messenger_messages`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_75EA56E0FB7336F0` (`queue_name`),
-  ADD KEY `IDX_75EA56E0E3BD61CE` (`available_at`),
-  ADD KEY `IDX_75EA56E016BA31DB` (`delivered_at`);
-
---
--- Index pour la table `resource`
---
-ALTER TABLE `resource`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_BC91F416F47645AE` (`url`),
-  ADD KEY `IDX_BC91F416A76ED395` (`user_id`);
-
---
--- Index pour la table `site_variable`
---
-ALTER TABLE `site_variable`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`);
-
---
--- Index pour la table `utilisation`
---
-ALTER TABLE `utilisation`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_B02A3C4389329D25` (`resource_id`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `avatar`
---
-ALTER TABLE `avatar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT pour la table `contact`
---
-ALTER TABLE `contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT pour la table `fichier`
---
-ALTER TABLE `fichier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT pour la table `link`
---
-ALTER TABLE `link`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-
---
--- AUTO_INCREMENT pour la table `messenger_messages`
---
-ALTER TABLE `messenger_messages`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT pour la table `resource`
---
-ALTER TABLE `resource`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
-
---
--- AUTO_INCREMENT pour la table `site_variable`
---
-ALTER TABLE `site_variable`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT pour la table `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT pour la table `utilisation`
---
-ALTER TABLE `utilisation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- Contraintes pour les tables déchargées
