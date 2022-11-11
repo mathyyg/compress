@@ -15,7 +15,7 @@
     </div>
     {% else %}
     <h1>Achete ton grade VIP pour 30euro</h1>
-    <p>Tu pourras personaliser t'es liens et les securiser avec un mots de passe </p>
+    <p>Tu pourras personaliser tes liens et les securiser avec un mot de passe </p>
       {% if is_granted('ROLE_USER') %}
       <i>(fictif)</i>
       <form class="ui form" action="{{ path('app_buy') }}" method="POST">
@@ -53,7 +53,7 @@
               <input type="text" name="code_de_carte" maxlength="3" placeholder="CVC" required>
             </div>
             <div class="six wide field">
-              <label>Expiration</label>
+              <label>Date d'expiration</label>
               <div class="fields">
                 <div class="eight wide field">
                   <select class="ui fluid search dropdown" name="mois_de_carte" required>
@@ -79,12 +79,12 @@
             </div>
           </div>
           <div class="ui container left aligned" tabindex="0">
-            <input type="submit" class="ui button" value="payer">
+            <input type="submit" class="ui button" value="Payer">
           </div>
       </form>
   {% else %}
     <form class="ui form" action="{{ path('app_login') }}" method="POST">
-       <label for="connecter">tu doit etre connecter pour acheter</label>
+       <label for="connecter">Vous devez etre connecter pour acheter</label>
        <input class="ui button"  id="connecter" type="submit" value="se connecter">
     </form>
   {% endif %}

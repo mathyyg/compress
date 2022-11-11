@@ -44,8 +44,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Avatar $avatar = null;
 
+    #[ORM\Column]
+    private ?bool $blocked = null;
+
     public function __construct()
     {
+        $this->blocked = false;
         $this->created_at = new \DateTime('now');
         $this->resources = new ArrayCollection();
     }
@@ -208,6 +212,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function isBlocked(): ?bool
+    {
+        return $this->blocked;
+    }
+
+    public function setBlocked(bool $blocked): self
+    {
+        $this->blocked = $blocked;
 
         return $this;
     }
