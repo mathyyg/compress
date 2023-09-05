@@ -19,7 +19,7 @@ Projet de Programmation Web Serveur en 3ème année de Licence Informatique à l
 - 4: configurer son .env avec son service de bdd "DATABASE_URL='...'"
 - 5: ajouter la variable suivante au .env :
 
-##### MAILER_DSN=gmail://julien.boisgard37@gmail.com:uktwwnchndujsder@default
+##### MAILER_DSN=gmail://
 
 - 6: si la bdd n'existe pas, la créer: symfony console doctrine:database:create
 (ATTENTION: si vous utilisez wamp et mariadb, dans le my.ini changer le "innodb-default-row-format" de "compact" à "dynamic",
